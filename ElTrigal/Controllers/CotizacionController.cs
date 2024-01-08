@@ -331,7 +331,7 @@ namespace ElTrigal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GuardarEdicionCliente(Guid id, [Bind("Id,Nombre,Telefono,Direccion")] Cliente cliente)
+        public async Task<IActionResult> EditarCliente(Guid id, [Bind("Id,Nombre,Telefono,Direccion")] Cliente cliente)
         {
             if (id != cliente.Id)
             {
