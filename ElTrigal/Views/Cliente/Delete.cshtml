@@ -1,0 +1,42 @@
+﻿@model ElTrigal.Models.Cliente
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/personas.css">
+
+<h1>Eliminar</h1>
+
+<h3>¿Estas seguro de querer eliminar a @Html.DisplayFor(model => model.Nombre)?</h3>
+<h4>Algunas Cotizaciones se perderan</h4>
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="borrar" class="btn btn-danger" /> 
+        <a asp-action="Index">Cancelar</a>
+    </form>
+</div>

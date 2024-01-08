@@ -1,0 +1,73 @@
+﻿@model ElTrigal.Models.Cotizacion
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+<div class="container">
+    <h1>@Html.DisplayFor(model => model.Cliente.Nombre)</h1>
+    <h4>Detalles de la cotización</h4>
+    <div>
+        <h4>Cotizacion</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cliente.Telefono)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cliente.Telefono)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cliente.Direccion)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cliente.Direccion)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Fecha)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <h4>Detalle</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detalle in Model.Detalles.ToList())
+                {
+                    <tr>
+                        <td>@detalle.Producto?.Nombre</td>
+                        <td>@detalle.Cantidad</td>
+                        <td>$@Math.Round(detalle.Producto?.Precio ?? 0, 2)</td>
+                        <td>$@Math.Round((detalle.Cantidad * detalle.Producto?.Precio) ?? 0, 2)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="text-align:right;"><strong>Total:</strong></td>
+                    <td>$@Math.Round(Model.Detalles.Sum(detalle => detalle.Cantidad * detalle.Producto?.Precio) ?? 0, 2)</td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> 
+        <a asp-action="Index" class="btn btn-secondary">Regresar al Listado</a>
+    </div>
+</div>

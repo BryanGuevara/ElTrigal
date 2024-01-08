@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Pagina Principal";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/index.css">
+
+@model List<Producto>
+
+<h1>El Trigal</h1>
+<div class="container">
+    <a class="nav-link cotizaciones" asp-area="" asp-controller="Cotizacion" asp-action="Index">Cotizaciones</a>
+    <a class="nav-link productos" asp-area="" asp-controller="Home" asp-action="Productos">Productos</a>
+</div>
+
+<h2>Todos los Productos</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.Nombre</td>
+                <td>@producto.Marca?.Nombre</td>
+                <td>@producto.Categoria?.Nombre</td>
+                <td>$@Math.Round(producto.Precio ?? 0, 2)</td>
+            </tr>
+        }
+    </tbody>
+</table>

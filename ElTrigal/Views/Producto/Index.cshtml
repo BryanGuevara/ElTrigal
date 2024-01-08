@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ElTrigal.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/productos.css" />
+
+<h1>Index</h1>
+
+<p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
+<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="ver">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

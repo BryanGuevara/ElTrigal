@@ -1,0 +1,31 @@
+﻿@model ElTrigal.Models.Marca
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+<link rel="stylesheet" href="~/css/personas.css">
+
+<h1>Details</h1>
+
+<div>
+    <h4>Marca</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Proveedor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proveedor.Nombre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a>
+    <a asp-action="Index">Back to List</a>
+</div>

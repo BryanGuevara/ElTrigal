@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+
+@model ElTrigal.Models.Cotizacion
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+<div class="container">
+    <h1>Edit</h1>
+
+    <h4>Cotizacion</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="ClienteId" class="control-label"></label>
+                    <div class="input-group">
+                        <select asp-for="ClienteId" class="form-control" asp-items="@ViewBag.Clientes"></select>
+                        <div class="input-group-append">
+                            <a asp-action="EditarCliente" asp-route-clienteId="@Model.ClienteId">Editar Cliente</a>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <a asp-action="Detalle" asp-route-id="@Model.Id" class="btn btn-primary">Agregar Producto</a>
+        <h4>Detalle</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Detalles != null)
+                {
+                    @foreach (var detalle in Model.Detalles)
+                    {
+                        <tr>
+                            <td>@detalle.Producto?.Nombre</td>
+                            <td>@detalle.Cantidad</td>
+                            <td>$@Math.Round(detalle.Producto?.Precio ?? 0, 2)</td>
+                            <td>$@Math.Round((detalle.Cantidad * detalle.Producto?.Precio) ?? 0, 2)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="text-align:right;"><strong>Total:</strong></td>
+                    <td>
+                        @if (Model.Detalles != null)
+                        {
+                            @Math.Round(Model.Detalles.Sum(detalle => detalle.Cantidad * detalle.Producto?.Precio) ?? 0, 2)
+                        }
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div>
+        <a asp-action="Index">Regresar a el Listado</a>
+    </div>
+</div>

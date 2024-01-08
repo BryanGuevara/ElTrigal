@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<ElTrigal.Models.Cotizacion>
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+<div class="container">
+    <h1>Cotización</h1>
+    <p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
+    <p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Fecha)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary editar">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success ver">Ver</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger borrar">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
