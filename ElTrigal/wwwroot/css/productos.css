@@ -6,11 +6,11 @@
 }
 
 h1, h2, h3, p {
-    color: #000000;
+    color: #ffffff;
 }
 
 a {
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
     padding: 8px 12px;
     border: 1px solid #ffffff;
@@ -20,8 +20,8 @@ a {
 }
 
     a:hover {
-        background-color: #8B0000; 
-        color: #000000;
+        background-color: #8B0000;
+        color: #ffffff;
         transform: scale(1.05);
     }
 
@@ -103,13 +103,13 @@ textarea {
 label {
     display: block;
     margin-bottom: 8px;
-    color: #000000;
+    color: #ffffff;
 }
 
 .btn-primary {
-    background-color: #8B0000; 
+    background-color: #8B0000;
     border-color: #8B0000;
-    color: #000000;
+    color: #ffffff;
 }
 
 .btn-danger {

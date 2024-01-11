@@ -1,7 +1,7 @@
 ﻿@model ElTrigal.Models.Categoria
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
     Layout = null;
 }
 <link rel="stylesheet" href="~/css/productos.css">
@@ -24,7 +24,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <input type="submit" value="Borrar" class="btn btn-primary" /> |
         <a asp-action="Index">Cancelar</a>
     </form>
 </div>

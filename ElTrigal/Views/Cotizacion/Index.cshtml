@@ -1,21 +1,31 @@
-﻿@{
-    Layout = null;
-}
-@model IEnumerable<ElTrigal.Models.Cotizacion>
-<link rel="stylesheet" href="~/css/cotizacion.css">
+﻿@model IEnumerable<ElTrigal.Models.Cotizacion>
 
-<div class="container">
-    <h1>Cotización</h1>
-    <p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
-    <p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+@{
+    Layout = null;
+    ViewData["Title"] = "Cotizaciones";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <h1>Cotizaciones</h1>
+
+    <p>
+        <a asp-action="Crear" class="btn-primary">Crear Nuevo</a>
+    </p>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    Cliente
+                    @Html.DisplayNameFor(model => model.Fecha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Fecha)
+                    @Html.DisplayNameFor(model => model.Cliente)
                 </th>
                 <th></th>
             </tr>
@@ -25,18 +35,20 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Cliente.Nombre)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Fecha)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary editar">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success ver">Ver</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger borrar">Borrar</a>
+                        @Html.DisplayFor(modelItem => item.Cliente.Id)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Eliminar</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
+
+</body>
+</html>

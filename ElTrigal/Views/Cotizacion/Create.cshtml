@@ -1,35 +1,50 @@
 ﻿@model ElTrigal.Models.Cotizacion
 
 @{
-    ViewData["Title"] = "Create";
     Layout = null;
+    ViewData["Title"] = "Crear";
 }
 
-<link rel="stylesheet" href="~/css/cotizacion.css">
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
 
-<div class="container">
     <h1>Crear</h1>
 
-    <h4>¿Para quien sera la cotización?</h4>
+    <h4>Cotización</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create">
+            <form asp-action="Crear" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="ClienteId" class="control-label"></label>
                     <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
                 </div>
-
                 <div class="form-group">
-                    <input type="submit" value="Crear" class="btn btn-primary" />
+                    <label asp-for="Fecha" class="control-label"></label>
+                    <input asp-for="Fecha" class="form-control" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">Crear</button>
                 </div>
             </form>
         </div>
     </div>
 
     <div>
-        <a asp-action="Index">Cancelar</a>
+        <a asp-action="Index" class="btn">Volver a la Lista</a>
     </div>
-</div>
+
+</body>
+</html>

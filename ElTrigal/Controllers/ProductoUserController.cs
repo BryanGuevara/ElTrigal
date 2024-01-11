@@ -9,102 +9,102 @@ using ElTrigal.Models;
 
 namespace ElTrigal.Controllers
 {
-    public class CotizacionController : Controller
+    public class ProductoUserController : Controller
     {
         private readonly ElTrigalContext _context;
 
-        public CotizacionController(ElTrigalContext context)
+        public ProductoUserController(ElTrigalContext context)
         {
             _context = context;
         }
 
-        // GET: Cotizacion
+        // GET: Producto
         public async Task<IActionResult> Index()
         {
-            var elTrigalContext = _context.Cotizaciones.Include(c => c.Cliente);
+            var elTrigalContext = _context.Productos.Include(p => p.Categoria).Include(p => p.Marca);
             return View(await elTrigalContext.ToListAsync());
         }
 
-        // GET: Cotizacion/Details/5
+        // GET: Producto/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var cotizacion = await _context.Cotizaciones
-                .Include(c => c.Cliente)
-                .Include(c => c.Detalles)
-                    .ThenInclude(d => d.Producto)
+            var producto = await _context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (cotizacion == null)
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(cotizacion);
+            return View(producto);
         }
 
-        // GET: Cotizacion/Create
+        // GET: Producto/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nombre");
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre");
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre");
             return View();
         }
 
-        // POST: Cotizacion/Create
+        // POST: Producto/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClienteId,Fecha")] Cotizacion cotizacion)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,MarcaId,CategoriaId,Precio")] Producto producto)
         {
-                cotizacion.Id = Guid.NewGuid();
-                _context.Add(cotizacion);
+                producto.Id = Guid.NewGuid();
+                _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            
         }
-         
 
-        // GET: Cotizacion/Edit/5
+        // GET: Producto/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Cotizaciones == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var cotizacion = await _context.Cotizaciones.FindAsync(id);
-            if (cotizacion == null)
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nombre", cotizacion.ClienteId);
-            return View(cotizacion);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre", producto.CategoriaId);
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
+            return View(producto);
         }
 
-        // POST: Cotizacion/Edit/5
+        // POST: Producto/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ClienteId,Fecha")] Cotizacion cotizacion)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,MarcaId,CategoriaId,Precio")] Producto producto)
         {
-            if (id != cotizacion.Id)
+            if (id != producto.Id)
             {
                 return NotFound();
             }
 
                 try
                 {
-                    _context.Update(cotizacion);
+                    _context.Update(producto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CotizacionExists(cotizacion.Id))
+                    if (!ProductoExists(producto.Id))
                     {
                         return NotFound();
                     }
@@ -115,48 +115,49 @@ namespace ElTrigal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-    
-        // GET: Cotizacion/Delete/5
+
+        // GET: Producto/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Cotizaciones == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var cotizacion = await _context.Cotizaciones
-                .Include(c => c.Cliente)
+            var producto = await _context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (cotizacion == null)
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(cotizacion);
+            return View(producto);
         }
 
-        // POST: Cotizacion/Delete/5
+        // POST: Producto/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Cotizaciones == null)
+            if (_context.Productos == null)
             {
-                return Problem("Entity set 'ElTrigalContext.Cotizaciones'  is null.");
+                return Problem("Entity set 'ElTrigalContext.Productos'  is null.");
             }
-            var cotizacion = await _context.Cotizaciones.FindAsync(id);
-            if (cotizacion != null)
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto != null)
             {
-                _context.Cotizaciones.Remove(cotizacion);
+                _context.Productos.Remove(producto);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CotizacionExists(Guid id)
+        private bool ProductoExists(Guid id)
         {
-          return (_context.Cotizaciones?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Productos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

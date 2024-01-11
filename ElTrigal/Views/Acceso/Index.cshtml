@@ -1,0 +1,34 @@
+﻿@model ElTrigal.Models.Usuario
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/login.css">
+
+<div class="container">
+    <h1>Login</h1>
+
+    @using (Html.BeginForm("Index", "Acceso", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label asp-for="NameTag">Usuario</label>
+            <input asp-for="NameTag" class="form-control user" placeholder="Ingrese su usuario" style="background-size: 20px 20px;" />
+            <span asp-validation-for="NameTag" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Pass">Contraseña</label>
+            <input asp-for="Pass" type="password" class="form-control password" placeholder="Ingrese su contraseña" style="background-size: 20px 20px;" />
+            <span asp-validation-for="Pass" class="text-danger"></span>
+        </div>
+        <button type="submit" class="login-button">Ingresar</button>
+    }
+
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["ErrorMessage"]
+        </div>
+    }
+</div>

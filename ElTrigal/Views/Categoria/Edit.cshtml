@@ -1,14 +1,14 @@
 ﻿@model ElTrigal.Models.Categoria
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
     Layout = null;
 }
 <link rel="stylesheet" href="~/css/productos.css">
 
 <h1>Editar Categoria</h1>
 
-<h4>Categoria</h4>
+<h4>@Html.DisplayNameFor(model => model.Nombre)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
