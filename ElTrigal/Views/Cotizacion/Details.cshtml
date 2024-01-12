@@ -36,7 +36,6 @@
     <hr />
     <hr />
     <h3>Productos</h3>
-
     <table class="table">
         <thead>
             <tr>
@@ -54,15 +53,15 @@
                     <td>@detalle.Producto.Id</td>
                     <td>@detalle.Producto.Nombre</td>
                     <td>@detalle.Cantidad</td>
-                    <td>@detalle.Producto.Precio</td>
-                    <td>@(detalle.Cantidad * detalle.Producto.Precio)</td>
+                    <td>$@string.Format("{0:F2}", detalle.Producto.Precio)</td>
+                    <td>$@string.Format("{0:F2}", detalle.Cantidad * detalle.Producto.Precio)</td>
                 </tr>
             }
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="4">Total</th>
-                <td>@Model.Detalles.Sum(d => d.Cantidad * d.Producto.Precio)</td>
+                <th colspan="4" style="text-align: right;">Total</th>
+                <td>$@string.Format("{0:F2}", Model.Detalles.Sum(d => d.Cantidad * d.Producto.Precio))</td>
             </tr>
         </tfoot>
     </table>

@@ -18,7 +18,6 @@ namespace ElTrigal.Controllers
             _context = context;
         }
 
-        // GET: Detalles
         public async Task<IActionResult> Index(Guid? cotizacionId)
         {
             if (cotizacionId == null)
@@ -37,8 +36,11 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
+            ViewData["cotizacionId"] = cotizacionId;
+
             return View(detalles);
         }
+
 
 
 
@@ -71,34 +73,22 @@ namespace ElTrigal.Controllers
             }
 
             ViewData["ProductoId"] = new SelectList(_context.Productos, "Id", "Nombre");
+
             ViewBag.CotizacionId = cotizacionId;
 
             return View();
         }
 
-        // POST: Detalles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CotizacionId,ProductoId,Cantidad")] Detalle detalle)
         {
-            try
-            {
-                    detalle.Id = Guid.NewGuid();
-                    _context.Add(detalle);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index), new { cotizacionId = detalle.CotizacionId });
-
-            }
-            catch (DbUpdateException)
-            {
-                // Log the error (uncomment ex variable name and write a log.)
-                ModelState.AddModelError("", "No se pudo guardar los cambios. Intente nuevamente y si el problema persiste, consulte con el administrador del sistema.");
-            }
-
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "Id", "Nombre", detalle.ProductoId);
-            return View(detalle);
+                detalle.Id = Guid.NewGuid();
+                _context.Add(detalle);
+                await _context.SaveChangesAsync();
+            Guid cotizacionId = detalle.CotizacionId;
+            return RedirectToAction(nameof(Index), new { cotizacionId });
         }
-
 
 
         // GET: Detalles/Edit/5
@@ -119,9 +109,6 @@ namespace ElTrigal.Controllers
             return View(detalle);
         }
 
-        // POST: Detalles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,CotizacionId,ProductoId,Cantidad")] Detalle detalle)
@@ -146,7 +133,7 @@ namespace ElTrigal.Controllers
                         throw;
                     }
              }
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { cotizacionId = detalle.CotizacionId });
         }
 
         // GET: Detalles/Delete/{id}

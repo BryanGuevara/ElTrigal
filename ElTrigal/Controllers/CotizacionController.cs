@@ -22,7 +22,8 @@ namespace ElTrigal.Controllers
         public async Task<IActionResult> Index()
         {
             var elTrigalContext = _context.Cotizaciones.Include(c => c.Cliente);
-            return View(await elTrigalContext.ToListAsync());
+            var cotizacionesOrdenadas = await elTrigalContext.OrderByDescending(c => c.Fecha).ToListAsync();
+            return View(cotizacionesOrdenadas);
         }
 
         // GET: Cotizacion/Details/5
@@ -66,7 +67,7 @@ namespace ElTrigal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
         }
-         
+
 
         // GET: Cotizacion/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -81,13 +82,14 @@ namespace ElTrigal.Controllers
             {
                 return NotFound();
             }
+
+            // Guardar la fecha original antes de mostrar el formulario de edición
+            TempData["FechaOriginal"] = cotizacion.Fecha;
+
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nombre", cotizacion.ClienteId);
             return View(cotizacion);
         }
 
-        // POST: Cotizacion/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,ClienteId,Fecha")] Cotizacion cotizacion)
@@ -97,25 +99,31 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
-                try
-                {
-                    _context.Update(cotizacion);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CotizacionExists(cotizacion.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+            try
+            {
+                var cotizacionExistente = await _context.Cotizaciones.FindAsync(id);
+
+                cotizacion.Fecha = (DateTime)TempData["FechaOriginal"];
+
+                _context.Entry(cotizacionExistente).CurrentValues.SetValues(cotizacion);
+
+                await _context.SaveChangesAsync();
             }
-    
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CotizacionExists(cotizacion.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Cotizacion/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -140,17 +148,18 @@ namespace ElTrigal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Cotizaciones == null)
+            var cotizacion = await _context.Cotizaciones
+                .Include(c => c.Detalles)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (cotizacion == null)
             {
-                return Problem("Entity set 'ElTrigalContext.Cotizaciones'  is null.");
+                return NotFound();
             }
-            var cotizacion = await _context.Cotizaciones.FindAsync(id);
-            if (cotizacion != null)
-            {
-                _context.Cotizaciones.Remove(cotizacion);
-            }
-            
+
+            _context.Cotizaciones.Remove(cotizacion);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

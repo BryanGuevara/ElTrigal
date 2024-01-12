@@ -135,17 +135,19 @@ namespace ElTrigal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Clientes == null)
+            var cliente = await _context.Clientes
+                .Include(c => c.Cotizaciones)
+                    .ThenInclude(c => c.Detalles)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cliente == null)
             {
-                return Problem("Entity set 'ElTrigalContext.Clientes'  is null.");
+                return NotFound();
             }
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente != null)
-            {
-                _context.Clientes.Remove(cliente);
-            }
-            
+
+            _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

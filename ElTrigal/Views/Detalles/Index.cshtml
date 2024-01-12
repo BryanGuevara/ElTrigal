@@ -13,10 +13,11 @@
 </head>
 <body>
 
-    <h1>Index</h1>
+    <h1>Detalle de @ViewData["cotizacionId"]</h1>
 
     <p>
-        <a asp-action="Create" asp-route-cotizacionId="@Model.FirstOrDefault()?.CotizacionId">Añadir Producto</a>
+        <a asp-action="Create" asp-route-cotizacionId="@ViewData["cotizacionId"]">Añadir Producto</a>
+        <a asp-controller ="Cotizacion" asp-action="Edit" asp-route-id="@ViewData["cotizacionId"]">Volver a la Cotizacón</a>
     </p>
     <table class="table">
         <thead>

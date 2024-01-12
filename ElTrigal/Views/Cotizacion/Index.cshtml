@@ -16,7 +16,7 @@
     <h1>Cotizaciones</h1>
 
     <p>
-        <a asp-action="Crear" class="btn-primary">Crear Nuevo</a>
+        <a asp-action="Create" class="btn-primary">Nueva Cotización</a>
     </p>
     <table class="table">
         <thead>
@@ -38,11 +38,11 @@
                         @Html.DisplayFor(modelItem => item.Fecha)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Cliente.Id)
+                        @Html.DisplayFor(modelItem => item.Cliente.Nombre)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a> 
+                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a> 
                         <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Eliminar</a>
                     </td>
                 </tr>
