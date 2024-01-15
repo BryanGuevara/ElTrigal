@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ElTrigalContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("Prod")));
 
 var app = builder.Build();
 
@@ -24,6 +24,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Cotizacion}/{action=Index}/{id?}");
+    pattern: "{controller=Acceso}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,0 +1,51 @@
+﻿@model ElTrigal.Models.Detalle
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Crear";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <h1>Crear</h1>
+    <p>Codigo de Cotización: @ViewBag.CotizacionId</p>
+    <h4>Detalle</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="CotizacionId" type="hidden" value="@ViewBag.CotizacionId" />
+
+                <div class="form-group">
+                    <label asp-for="ProductoId" class="control-label">Producto</label>
+                    <select asp-for="ProductoId" class="form-control" asp-items="@(ViewData["ProductoId"] as SelectList)"></select>
+                    <span asp-validation-for="ProductoId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Cantidad" class="control-label">Cantidad</label>
+                    <input asp-for="Cantidad" class="form-control" />
+                    <span asp-validation-for="Cantidad" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index" asp-route-cotizacionId="@ViewBag.CotizacionId" class="btn btn-secondary">Volver a la Lista</a>
+    </div>
+
+</body>
+</html>

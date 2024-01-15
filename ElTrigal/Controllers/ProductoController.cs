@@ -48,8 +48,8 @@ namespace ElTrigal.Controllers
         // GET: Producto/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Id");
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id");
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre");
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre");
             return View();
         }
 
@@ -60,16 +60,11 @@ namespace ElTrigal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,MarcaId,CategoriaId,Precio")] Producto producto)
         {
-            if (ModelState.IsValid)
-            {
-                producto.Id = Guid.NewGuid();
-                _context.Add(producto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Id", producto.CategoriaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
-            return View(producto);
+            producto.Id = Guid.NewGuid();
+            _context.Add(producto);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Producto/Edit/5
@@ -85,8 +80,8 @@ namespace ElTrigal.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Id", producto.CategoriaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre", producto.CategoriaId);
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
             return View(producto);
         }
 
@@ -102,29 +97,23 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(producto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductoExists(producto.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(producto);
+                await _context.SaveChangesAsync();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Id", producto.CategoriaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
-            return View(producto);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductoExists(producto.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Producto/Delete/5

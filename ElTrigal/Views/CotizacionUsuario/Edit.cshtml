@@ -28,11 +28,12 @@
                     <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
                     <span asp-validation-for="ClienteId" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <button type="submit" class="btn-primary">Guardar</button>
                 </div>
                 <div class="form-group">
-                    <a asp-controller="Detalles" asp-action="Index" asp-route-cotizacionId="@Model?.Id" class="btn-ver">Editar Productos</a>
+                    <a asp-controller="DetallesUsuario" asp-action="Index" asp-route-cotizacionId="@Model?.Id" class="btn-ver">Editar Productos</a>
                 </div>
             </form>
         </div>

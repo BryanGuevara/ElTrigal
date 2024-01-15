@@ -2,7 +2,7 @@
 
 @{
     Layout = null;
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Crear";
 }
 
 <!DOCTYPE html>
@@ -13,26 +13,30 @@
 </head>
 <body>
 
-    <h1>Editar</h1>
+    <h1>Crear</h1>
 
     <h4>Cotización</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="Create" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="ClienteId" class="control-label"></label>
                     <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
-                    <span asp-validation-for="ClienteId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn-primary">Guardar</button>
+                    <label asp-for="Fecha" class="control-label"></label>
+                    <input asp-for="Fecha" class="form-control" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <a asp-controller="Detalles" asp-action="Index" asp-route-cotizacionId="@Model?.Id" class="btn-ver">Editar Productos</a>
+                    <button type="submit" class="btn-primary">Crear</button>
                 </div>
             </form>
         </div>

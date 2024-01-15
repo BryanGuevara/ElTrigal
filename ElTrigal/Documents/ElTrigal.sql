@@ -8,10 +8,17 @@ use ElTrigal;
 GO
 
 --Personas
+
+Create Table Roles(
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
+	Nombre Varchar(50)
+);
+
 Create Table Usuarios(
     ID uniqueidentifier PRIMARY KEY NOT NULL,
 	Nombre Varchar(50),
 	NameTag Varchar(20),
+	RolID uniqueidentifier,
 	Pass Varchar(20)
 );
 
@@ -63,12 +70,15 @@ Create Table Detalle(
 	Cantidad Int
 );
 
+Insert INTO Roles(ID, Nombre)
+Values
+	(NEWID(), 'Usuario'),
+	(NEWID(), 'Administrador');
+
 -- Insertar usuarios
-INSERT INTO Usuarios (ID, Nombre, NameTag, Pass)
+INSERT INTO Usuarios (ID, Nombre, NameTag, RolID, Pass)
 VALUES
-    (NEWID(), 'Mario Argumedo', 'MarioA', 'Contraseña1'),
-    (NEWID(), 'Mario Ernesto', 'MarioE', 'Contraseña2'),
-    (NEWID(), 'Bryan Guevara', 'BryanG', 'Contraseña3');
+    (NEWID(), 'Primera Cuenta', 'SysAdmin', (SELECT ID FROM Roles WHERE Nombre = 'Administrador'), 'Admin2024');
 
 -- Insertar clientes
 INSERT INTO Clientes (ID, Nombre, Telefono, Direccion)
@@ -115,6 +125,7 @@ VALUES
     (NEWID(), (SELECT ID FROM Cotizaciones WHERE ClienteID = (SELECT ID FROM Clientes WHERE Nombre = 'Jaime Guevara')), (SELECT ID FROM Productos WHERE Nombre = 'Martillo'), 2),
     (NEWID(), (SELECT ID FROM Cotizaciones WHERE ClienteID = (SELECT ID FROM Clientes WHERE Nombre = 'Don Douglas')), (SELECT ID FROM Productos WHERE Nombre = 'Cemento'), 3);
 
+SELECT * FROM ROL;
 SELECT * FROM Usuarios;
 SELECT * FROM Clientes;
 SELECT * FROM Proveedor;

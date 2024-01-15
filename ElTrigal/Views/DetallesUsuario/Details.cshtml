@@ -1,0 +1,43 @@
+﻿@model ElTrigal.Models.Detalle
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Detalles";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <h1>Detalles</h1>
+
+    <div>
+        <h4>Codigo de la Cotización: @Html.DisplayFor(model => model.Cotizacion.Id)</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cantidad)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Producto)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Producto.Nombre)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn-editar">Editar</a>
+        <a asp-action="Index" asp-route-cotizacionId="@Model.Cotizacion.Id" class="btn btn-secondary">Volver a la Lista</a>
+    </div>
+
+</body>
+</html>

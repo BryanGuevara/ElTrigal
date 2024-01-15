@@ -1,0 +1,75 @@
+﻿@model ElTrigal.Models.Cotizacion
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Detalles";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <h1> @Html.DisplayFor(model => model.Cliente.Nombre)</h1>
+
+    <div>
+        <hr />
+        <h3>Detalles del Cliente</h3>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Fecha)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cliente.Nombre)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cliente.Nombre)
+            </dd>
+        </dl>
+    </div>
+    <hr />
+    <hr />
+    <h3>Productos</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id del Producto</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model.Detalles)
+            {
+                <tr>
+                    <td>@detalle.Producto.Id</td>
+                    <td>@detalle.Producto.Nombre</td>
+                    <td>@detalle.Cantidad</td>
+                    <td>$@string.Format("{0:F2}", detalle.Producto.Precio)</td>
+                    <td>$@string.Format("{0:F2}", detalle.Cantidad * detalle.Producto.Precio)</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="4" style="text-align: right;">Total</th>
+                <td>$@string.Format("{0:F2}", Model.Detalles.Sum(d => d.Cantidad * d.Producto.Precio))</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn-editar">Editar</a> |
+        <a asp-action="Index" class="btn">Volver a la Lista</a>
+    </div>
+
+</body>
+</html>
