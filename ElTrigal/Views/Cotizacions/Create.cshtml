@@ -1,0 +1,55 @@
+﻿@model ElTrigal.Models.Cotizacion
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+<h1>Create</h1>
+
+<h4>Cotizacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId">
+                    <option value="">-- Selecciona un cliente --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Iva" class="control-label"></label>
+                <select asp-for="Iva" class="form-control">
+                    <option value="true">Con IVA</option>
+                    <option value="false">Sin IVA</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dias" class="control-label"></label>
+                <select asp-for="Dias" class="form-control">
+                    <option value="7">7 Días</option>
+                    <option value="15">15 Días</option>
+                    <option value="30">Un mes</option>
+                    <option value="60">Dos meses</option>
+                    <option value="90">Tres meses</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al Listado</a>
+</div>

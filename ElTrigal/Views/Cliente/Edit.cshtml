@@ -4,41 +4,79 @@
     ViewData["Title"] = "Editar";
     Layout = null;
 }
+
 <link rel="stylesheet" href="~/css/personas.css">
 
-<h1>Editar datos del Cliente</h1>
 
-<h4>@Html.DisplayNameFor(model => model.Nombre)</h4>
+<h1>Editar Cliente</h1>
 
 <div class="row">
-    <hr />
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Dui" class="control-label">Número de DUI</label>
+                <input asp-for="Dui" class="form-control" />
+                <span asp-validation-for="Dui" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label">Nombre del Cliente</label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
+                <label asp-for="Telefono" class="control-label">Número de Teléfono</label>
                 <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
+                <label asp-for="Correo" class="control-label">Correo Electrónico</label>
+                <input asp-for="Correo" class="form-control" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Municipio" class="control-label">Municipio</label>
+                <input asp-for="Municipio" class="form-control" />
+                <span asp-validation-for="Municipio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Departamento" class="control-label">Departamento</label>
+                <select asp-for="Departamento" class="form-control">
+                    <option value="Ahuachapán">Ahuachapán</option>
+                    <option value="Cabañas">Cabañas</option>
+                    <option value="Chalatenango">Chalatenango</option>
+                    <option value="Cuscatlán">Cuscatlán</option>
+                    <option value="La Libertad">La Libertad</option>
+                    <option value="La Paz">La Paz</option>
+                    <option value="La Unión">La Unión</option>
+                    <option value="Morazán">Morazán</option>
+                    <option value="San Miguel">San Miguel</option>
+                    <option value="San Salvador">San Salvador</option>
+                    <option value="San Vicente">San Vicente</option>
+                    <option value="Santa Ana">Santa Ana</option>
+                    <option value="Sonsonate">Sonsonate</option>
+                    <option value="Usulután">Usulután</option>
+                </select>
+                <span asp-validation-for="Departamento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label">Dirección</label>
                 <input asp-for="Direccion" class="form-control" />
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Cancelar</a>
-</div>
-

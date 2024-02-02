@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ElTrigal.Models.Venta>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+<h1>Ventas</h1>
+
+<p><a asp-action="Create">Nueva Venta</a></p>
+<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaVenta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaVenta)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

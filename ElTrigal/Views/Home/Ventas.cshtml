@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Ventas";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/index.css">
+<div class="container">
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCotizaciones == true))
+    {
+        <a class="nav-link cotizaciones dentro" asp-controller="Cotizacions" asp-action="Index">Cotizaciones</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerVentas == true))
+    {
+        <a class="nav-link cotizaciones dentro" asp-controller="Ventas" asp-action="Index">Ventas</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerAnalisis == true))
+    {
+        <a class="nav-link cotizaciones dentro" asp-controller="Analisis" asp-action="Index">Analisis</a>
+    }
+    <a class="nav-link text-dark salir dentro" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
+</div>
+
+
+<p>
+    En Esta parte puedes ver todo lo relacionado a personas, como los <b>Clientes</b> para cotizaciones,
+    y los propios <b>Usuarios</b> que pueden usar este sistema y los <b>Roles</b> de los Usuarios
+</p>

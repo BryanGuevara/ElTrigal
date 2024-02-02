@@ -1,0 +1,59 @@
+﻿@model List<ElTrigal.Models.Detalle>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/cotizacion.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <h1>Detalles de la Venta</h1>
+
+    <p>
+        <a asp-action="Create" asp-route-perteneceId="@ViewData["PerteneceId"]">Añadir Producto</a>
+        <a asp-controller="Ventas" asp-action="Details" asp-route-id="@ViewData["PerteneceId"]">Volver a la Cotización</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Descuento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.Producto.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.Producto.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.Descuento)%
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@detalle.Id" class="editar">Editar</a>
+                        <a asp-action="Details" asp-route-id="@detalle.Id" class="ver">Ver</a>
+                        <a asp-action="Delete" asp-route-id="@detalle.Id" class="borrar">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -2,36 +2,137 @@
     ViewData["Title"] = "Pagina Principal";
     Layout = null;
 }
+
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerTodo)
+{
+    <script>window.location.href = '@Url.Action("Index", "Acceso")';</script>
+}
+
 <link rel="stylesheet" href="~/css/index.css">
 
 @model List<Producto>
 
     <h1>El Trigal</h1>
 <div class="container">
-    <a class="nav-link cotizaciones" asp-area="" asp-controller="Cotizacion" asp-action="Index">Cotizaciones</a>
-<a class="nav-link personas" asp-area="" asp-controller="Home" asp-action="Personas">Personas</a>
-<a class="nav-link productos" asp-area="" asp-controller="Home" asp-action="Productos">Productos</a>
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCotizaciones == true || RoleContext.CurrentRole.VerVentas == true))
+    {
+        <a class="nav-link cotizaciones @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Ventas">Ventas</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerUsuario == true || RoleContext.CurrentRole.VerCliente == true || RoleContext.CurrentRole.VerRol == true))
+    {
+        <a class="nav-link personas @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Personas">Personas</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCatalogo == true))
+    {
+        <a class="nav-link catalogo @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Catalogo">Catalogo</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos == true || RoleContext.CurrentRole.VerCategoria == true || RoleContext.CurrentRole.VerMarca == true || RoleContext.CurrentRole.VerProveedor == true))
+    {
+        <a class="nav-link productos @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Productos">Productos</a>
+    }
+    <a class="nav-link salir @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-controller="Acceso" asp-action="Index">Salir</a>
 </div>
 
-<h2>Todos los Productos</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Marca</th>
-            <th>Categoría</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var producto in Model)
-        {
+ @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos == true))
+{
+    <form asp-action="Filtro" method="get">
+        <div class="filter-container">
+            <div class="table-container">
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;" colspan="2"><label for="Codigo">Codigo:</label></th>
+                        <th style="background-color: #1a1a1a; border:0;" colspan="2"><label for="nombre">Nombre:</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;" colspan="2"><input type="text" id="codigo" name="codigo" value="@ViewBag.Codigo" /></td>
+                        <td style="background-color: #1a1a1a; border:0;" colspan="2"><input type="text" id="nombre" name="nombre" value="@ViewBag.Nombre" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;" colspan="2"><label for="nombre">Proveedor:</label></th>
+                        <th style="background-color: #1a1a1a; border:0;" colspan="2"><label for="nombre">Marca:</label></th>
+                        <th style="background-color: #1a1a1a; border:0;" colspan="2"><label for="nombre">Categoria:</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;" colspan="2">
+                            <select id="proveedor" name="proveedor">
+                                <option value="">Todos</option>
+                                @if (ViewBag.Proveedores != null)
+                                {
+                                    foreach (var proveedor in ViewBag.Proveedores)
+                                    {
+                                        <option value="@proveedor.Id">@proveedor.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;" colspan="2">
+                            <select id="marca" name="marca">
+                                <option value="">Todas</option>
+                                @if (ViewBag.Marcas != null)
+                                {
+                                    foreach (var marca in ViewBag.Marcas)
+                                    {
+                                        <option value="@marca.Id">@marca.Nombre</option>
+                                    }
+                                }
+
+                            </select>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;" colspan="2">
+                            <select id="categoria" name="categoria">
+                                <option value="">Todas</option>
+                                @if (ViewBag.Categorias != null)
+                                {
+                                    foreach (var categoria in ViewBag.Categorias)
+                                    {
+                                        <option value="@categoria.Id">@categoria.Nombre</option>
+                                        <p value="@categoria.Descripcion"></p>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <input type="submit" value="Filtrar (@Model.Count)" />
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>@producto.Nombre</td>
-                <td>@producto.Marca?.Nombre</td>
-                <td>@producto.Categoria?.Nombre</td>
-                <td>$@Math.Round(producto.Precio ?? 0, 2)</td>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Proveedor</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Detalles</th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Codigo</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Marca?.Nombre</td>
+                    <td>@item.Marca?.Proveedor?.Nombre</td>
+                    <td>@item.Categoria?.Nombre</td>
+                    <td>$@Math.Round(item.Precio ?? 0, 2) @item.Ventas</td>
+                    <td><a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a></td>
+                </tr>
+            }
+        </tbody>
 </table>
+}

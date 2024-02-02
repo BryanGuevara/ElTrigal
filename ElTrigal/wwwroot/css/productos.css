@@ -20,7 +20,7 @@ a {
 }
 
     a:hover {
-        background-color: #8B0000;
+        background-color: #8B8B00; 
         color: #ffffff;
         transform: scale(1.05);
     }
@@ -44,8 +44,8 @@ a {
     }
 
 .create {
-    background-color: #8B0000; 
-    border: 1px solid #8B0000; 
+    background-color: #8B8B00; 
+    border: 1px solid #8B8B00;
     color: #000000;
     padding: 10px 15px;
     border-radius: 4px;
@@ -87,7 +87,7 @@ textarea {
     border: 1px solid #ced4da;
     border-radius: 4px;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    width: 100%;
+    width: 50%;
     box-sizing: border-box;
     background-color: #ffffff;
 }
@@ -95,7 +95,7 @@ textarea {
     input:hover,
     select:hover,
     textarea:hover {
-        border-color: #8B0000; 
+        border-color: #8B8B00; 
         filter: brightness(50%);
         transform: scale(1.05);
     }
@@ -107,8 +107,8 @@ label {
 }
 
 .btn-primary {
-    background-color: #8B0000;
-    border-color: #8B0000;
+    background-color: #8B8B00; 
+    border-color: #8B8B00; 
     color: #ffffff;
 }
 
@@ -118,14 +118,14 @@ label {
 }
 
 input[type="submit"] {
-    background-color: #8B0000; 
-    border-color: #8B0000; 
+    background-color: #8B8B00;
+    border-color: #8B8B00;
     color: #ffffff;
     cursor: pointer;
 }
 
     input[type="submit"]:hover {
-        background-color: #8B0000; 
+        background-color: #8B8B00; 
     }
 
 .table {
@@ -153,9 +153,9 @@ td {
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #8B0000; 
+    background-color: #8B8B00; 
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #D9534F; 
+    background-color: #D9534F;
 }

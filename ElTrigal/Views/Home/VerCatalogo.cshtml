@@ -1,0 +1,117 @@
+﻿@{
+    ViewData["Title"] = "Catalogo";
+    Layout = null;
+}
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerCatalogo)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+<link rel="stylesheet" href="~/css/index.css">
+<style>
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #343a40;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background-color: #343a40;
+        color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        width: calc(25% - 20px);
+        margin: 10px;
+        display: inline-block;
+        vertical-align: top;
+        transition: all 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-info {
+        padding: 20px;
+    }
+
+    .codigo {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .categoria span {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .marca {
+        font-size: 12px;
+    }
+
+    #marca-filter {
+        margin-bottom: 20px;
+    }
+
+    label.marca {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<h1>@ViewBag.Proveedor</h1>
+
+<label class="marca" for="marca-filter">Filtrar por Marca:</label>
+<select id="marca-filter" class="marca">
+    <option value="">Todas</option>
+    @foreach (var marca in ViewBag.Marcas)
+    {
+        <option value="@marca.Id">@marca.Nombre</option>
+    }
+</select>
+
+<hr />
+@foreach (var producto in ViewBag.Productos)
+{
+    <a href="@Url.Action("DetailsCat", new { id = producto.Id })">
+        <div class="card" data-marca="@producto.Marca?.Id">
+            <div class="card-info">
+                <span class="codigo">@producto.Codigo</span>
+                <h3>@producto.Nombre</h3>
+                <div class="categoria">
+                    <span>Categoría: @producto.Categoria?.Nombre</span>
+                    <span>Marca: @producto.Marca?.Nombre</span>
+                </div>
+            </div>
+        </div>
+    </a>
+}
+
+
+<script>
+    document.getElementById('marca-filter').addEventListener('change', function () {
+        var marcaId = this.value;
+        var cards = document.getElementsByClassName('card');
+
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var cardMarcaId = card.getAttribute('data-marca');
+
+            if (!marcaId || cardMarcaId === marcaId) {
+                card.style.display = 'inline-block';
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    });
+</script>

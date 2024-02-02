@@ -12,7 +12,10 @@ public partial class Categoria
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
 
-    [DisplayName("Categoria")]
+    [DisplayName("Nombre")]
     public string? Nombre { get; set; }
+
+    [DisplayName("Descripción")]
+    public string? Descripcion {get; set;}
     public List<Producto> Productos { get; set; }
 }

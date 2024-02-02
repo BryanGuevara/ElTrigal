@@ -8,24 +8,91 @@ use ElTrigal;
 GO
 
 --Personas
+CREATE TABLE Roles (
+    ID UNIQUEIDENTIFIER PRIMARY KEY NOT NULL,
+    Nombre VARCHAR(50),
+    VerTodo BIT,
 
-Create Table Roles(
-    ID uniqueidentifier PRIMARY KEY NOT NULL,
-	Nombre Varchar(50)
+    -- Permisos de Usuarios
+    VerUsuario BIT,
+    EditUsuario BIT,
+    EliUsuario BIT,
+    CrearUsuario BIT,
+    EditPass BIT,
+    
+    -- Permisos de Clientes
+    VerCliente BIT,
+    EditCliente BIT,
+    EliCliente BIT,
+    CrearCliente BIT,
+    
+    -- Permisos de Proveedores
+    VerProveedor BIT,
+    EditProveedor BIT,
+    EliProveedor BIT,
+    CrearProveedor BIT,
+
+    -- Permisos de Marca
+    VerMarca BIT,
+    EditMarca BIT,
+    EliMarca BIT,
+    CrearMarca BIT,
+
+    -- Permisos de Categoria
+    VerCategoria BIT,
+    EditCategoria BIT,
+    EliCategoria BIT,
+    CrearCategoria BIT,
+
+    -- Permisos de Productos
+    VerProductos BIT,
+    EditProductos BIT,
+    EliProductos BIT,
+    CrearProductos BIT,
+    VerCatalogo BIT,
+    Pedido BIT,
+
+    -- Permisos de Cotizaciones
+    VerCotizaciones BIT,
+    EditCotizaciones BIT,
+    EliCotizaciones BIT,
+    CrearCotizaciones BIT,
+
+    -- Permisos de Ventas
+    VerVentas BIT,
+    EditVentas BIT,
+    EliVentas BIT,
+    CrearVentas BIT,
+
+    -- Permisos de Rol
+    VerRol BIT,
+    EditRol BIT,
+    EliRol BIT,
+    CrearRol BIT,
+
+    -- Permisos de Analisis
+    VerAnalisis BIT
 );
+
 
 Create Table Usuarios(
     ID uniqueidentifier PRIMARY KEY NOT NULL,
 	Nombre Varchar(50),
 	NameTag Varchar(20),
+	Telefono varchar(20),
+    Correo Varchar(100),
 	RolID uniqueidentifier,
 	Pass Varchar(20)
 );
 
 Create Table Clientes(
+    DUI varchar(20),
     ID uniqueidentifier PRIMARY KEY NOT NULL,
 	Nombre varchar(50),
-	Telefono varchar(15),
+	Telefono varchar(20),
+    Correo Varchar(100),
+    Municipio varchar(30),
+    Departamento varchar(30),
 	Direccion Varchar(100)
 );
 
@@ -33,104 +100,116 @@ Create Table Clientes(
 
 Create Table Proveedor(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
-	Nombre varchar(20)
+	Nombre varchar(50),
+    SitioWeb varchar(50),
+    Descripcion Varchar(MAX),
+    DescripcionCorta Varchar(255),
+    Direccion Varchar(255),
+    Telefono Varchar(20),
+    ServicioTel Varchar(20),
+    ServicioCorreo Varchar(50),
+    AtencionTel Varchar(20),
+    AtencionCorreo Varchar(50),
+    GerenciaTel Varchar(20),
+    GerenciaCorreo Varchar(50),
+    DespachoTel Varchar(20),
+    DespachoCorreo Varchar(50),
+    CobrosTel Varchar(20),
+    CobrosCorreo Varchar(50),
+    CondicionPago Varchar(20)
 );
 
 Create Table Marca(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
-	Nombre Varchar(20),
-	ProveedorId uniqueidentifier
+	Nombre Varchar(50),
+	ProveedorId uniqueidentifier,
+    Descripcion Varchar(255),
+    Especialidad Varchar(30)
 );
 
 Create Table Categoria(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
-	Nombre Varchar(30)
+	Nombre Varchar(30),
+    Descripcion Varchar(50)
 );
 
 Create Table Productos(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
-	Nombre Varchar(20),
+    Codigo varchar (20) NOT NULL,
+	Nombre Varchar(50),
+    Descripcion Varchar(100),
 	MarcaID uniqueidentifier,
 	CategoriaID uniqueidentifier,
+    Cantidad int,
+    ventas varchar(5),
     Precio Money
 );
 
---Cotización
+--Cotización y Ventas
 
 Create Table Cotizaciones(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
+    CodigoFactura Varchar(8),
+    CodigoPedido Varchar(7),
 	ClienteID uniqueidentifier,
-	Fecha Date
+	Fecha Date,
+    Vencimiento Date,
+    Entregado BIT,
+    IVA BIT,
+    Comentario varchar(255),
+    Pagado BIT,
+    Abono Money
+);
+
+
+CREATE TABLE Ventas (
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
+    ClienteID uniqueidentifier,
+    FechaVenta DATE
 );
 
 Create Table Detalle(
 	ID uniqueidentifier PRIMARY KEY NOT NULL,
-	CotizacionID uniqueidentifier,
+	PerteneceID uniqueidentifier,
 	ProductoID uniqueidentifier,
-	Cantidad Int
+	Cantidad Int,
+    Descuento int
 );
 
-Insert INTO Roles(ID, Nombre)
-Values
-	(NEWID(), 'Usuario'),
-	(NEWID(), 'Administrador');
+-- Informes y Análisis
+CREATE TABLE InformesAnalisis (
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
+    TipoInforme VARCHAR(50),
+    DetallesInforme VARCHAR(MAX),
+    FechaGeneracion DATE
+);
 
--- Insertar usuarios
-INSERT INTO Usuarios (ID, Nombre, NameTag, RolID, Pass)
+GO
+
+-- Insertar datos de Roles
+INSERT INTO Roles (ID, Nombre, VerTodo, VerUsuario, EditUsuario, EliUsuario, CrearUsuario, EditPass,
+                    VerCliente, EditCliente, EliCliente, CrearCliente,
+                    VerProveedor, EditProveedor, EliProveedor, CrearProveedor,
+                    VerMarca, EditMarca, EliMarca, CrearMarca,
+                    VerCategoria, EditCategoria, EliCategoria, CrearCategoria,
+                    VerProductos, EditProductos, EliProductos, CrearProductos, VerCatalogo, Pedido,
+                    VerCotizaciones, EditCotizaciones, EliCotizaciones, CrearCotizaciones,
+                    VerVentas, EditVentas, EliVentas, CrearVentas,
+                    VerRol, EditRol, EliRol, CrearRol, VerAnalisis)
 VALUES
-    (NEWID(), 'Primera Cuenta', 'SysAdmin', (SELECT ID FROM Roles WHERE Nombre = 'Administrador'), 'Admin2024');
+('D209709B-33F8-4D16-856F-793B68468717', 'Administrador', 1, 1, 1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1,
+                                                        1, 1, 1, 1, 1);
 
--- Insertar clientes
-INSERT INTO Clientes (ID, Nombre, Telefono, Direccion)
+-- Insertar datos de Usuarios
+INSERT INTO Usuarios (ID, Nombre, NameTag, Telefono, Correo, RolID, Pass)
 VALUES
-    (NEWID(), 'Jaime Guevara', '123456789', 'Calle 123, Ciudad A'),
-    (NEWID(), 'Don Douglas', '987654321', 'Avenida XYZ, Ciudad B');
+('4C985811-C722-4456-A622-9CDDF3C90320', 'Primera Cuenta', 'SysAdmin', '(+503)7123-4569', 'sysadmin@example.com', 'D209709B-33F8-4D16-856F-793B68468717', 'Admin2024');
 
--- Insertar proveedores
-INSERT INTO Proveedor (ID, Nombre)
-VALUES
-    (NEWID(), 'Truper'),
-    (NEWID(), 'Total'),
-    (NEWID(), 'Trupper');
-
--- Insertar marcas
-INSERT INTO Marca (ID, Nombre, ProveedorId)
-VALUES
-    (NEWID(), 'Truper', (SELECT ID FROM Proveedor WHERE Nombre = 'Truper')),
-    (NEWID(), 'Total', (SELECT ID FROM Proveedor WHERE Nombre = 'Total')),
-    (NEWID(), 'Viduc', (SELECT ID FROM Proveedor WHERE Nombre = 'Truper')),
-    (NEWID(), 'Trupper', (SELECT ID FROM Proveedor WHERE Nombre = 'Trupper')),
-    (NEWID(), 'Foset', (SELECT ID FROM Proveedor WHERE Nombre = 'Truper'));
-
-INSERT INTO Categoria (ID, Nombre)
-VALUES
-    (NEWID(), 'Herramientas'),
-    (NEWID(), 'Materiales de construcción');
-
--- Insertar productos
-INSERT INTO Productos (ID, Nombre, MarcaID, CategoriaID, Precio)
-VALUES
-    (NEWID(), 'Martillo', (SELECT ID FROM Marca WHERE Nombre = 'Truper'), (SELECT ID FROM Categoria WHERE Nombre = 'Herramientas'), 19.99),
-    (NEWID(), 'Cemento', (SELECT ID FROM Marca WHERE Nombre = 'Total'), (SELECT ID FROM Categoria WHERE Nombre = 'Materiales de construcción'), 29.99);
-
--- Insertar cotizaciones
-INSERT INTO Cotizaciones (ID, ClienteID, Fecha)
-VALUES
-    (NEWID(), (SELECT ID FROM Clientes WHERE Nombre = 'Jaime Guevara'), GETDATE()),
-    (NEWID(), (SELECT ID FROM Clientes WHERE Nombre = 'Don Douglas'), GETDATE());
-
--- Insertar detalles de cotización
-INSERT INTO Detalle (ID, CotizacionID, ProductoID, Cantidad)
-VALUES
-    (NEWID(), (SELECT ID FROM Cotizaciones WHERE ClienteID = (SELECT ID FROM Clientes WHERE Nombre = 'Jaime Guevara')), (SELECT ID FROM Productos WHERE Nombre = 'Martillo'), 2),
-    (NEWID(), (SELECT ID FROM Cotizaciones WHERE ClienteID = (SELECT ID FROM Clientes WHERE Nombre = 'Don Douglas')), (SELECT ID FROM Productos WHERE Nombre = 'Cemento'), 3);
-
-SELECT * FROM ROL;
-SELECT * FROM Usuarios;
-SELECT * FROM Clientes;
-SELECT * FROM Proveedor;
-SELECT * FROM Marca;
-SELECT * FROM Categoria;
-SELECT * FROM Productos;
-SELECT * FROM Cotizaciones;
-SELECT * FROM Detalle;
+GO

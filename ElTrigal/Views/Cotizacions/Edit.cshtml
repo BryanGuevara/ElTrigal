@@ -1,0 +1,73 @@
+﻿@model ElTrigal.Models.Cotizacion
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+
+<h1>Edit</h1>
+
+<h4>Cotizacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dias" class="control-label"></label>
+                <select asp-for="Dias" class="form-control">
+                    <option value="7">Una semana</option>
+                    <option value="15">15 días</option>
+                    <option value="30">Un mes</option>
+                    <option value="60">Dos meses</option>
+                    <option value="90">Tres meses</option>
+                </select>
+                <span asp-validation-for="Dias" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Entregado" /> @Html.DisplayNameFor(model => model.Entregado)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Iva" /> @Html.DisplayNameFor(model => model.Iva)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Pagado" /> @Html.DisplayNameFor(model => model.Pagado)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Abono" class="control-label"></label>
+                <input asp-for="Abono" class="form-control" />
+                <span asp-validation-for="Abono" class="text-danger"></span>
+            </div>
+
+                <a asp-controller="Detalles" asp-action="Index" asp-route-perteneceId="@Model.Id">Editar Productos</a>
+           
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al Listado</a>
+</div>

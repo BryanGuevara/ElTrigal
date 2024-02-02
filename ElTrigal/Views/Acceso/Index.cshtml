@@ -1,34 +1,15 @@
-﻿@model ElTrigal.Models.Usuario
-
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    ViewData["Title"] = "Productos";
     Layout = null;
 }
-
-<link rel="stylesheet" href="~/css/login.css">
+<link rel="stylesheet" href="~/css/index.css">
 
 <div class="container">
-    <h1>Login</h1>
-
-    @using (Html.BeginForm("Index", "Acceso", FormMethod.Post))
-    {
-        <div class="form-group">
-            <label asp-for="NameTag">Usuario</label>
-            <input asp-for="NameTag" class="form-control user" placeholder="Ingrese su usuario" style="background-size: 20px 20px;" />
-            <span asp-validation-for="NameTag" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Pass">Contraseña</label>
-            <input asp-for="Pass" type="password" class="form-control password" placeholder="Ingrese su contraseña" style="background-size: 20px 20px;" />
-            <span asp-validation-for="Pass" class="text-danger"></span>
-        </div>
-        <button type="submit" class="login-button">Ingresar</button>
-    }
-
-    @if (ViewData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger" role="alert">
-            @ViewData["ErrorMessage"]
-        </div>
-    }
+    <a class="nav-link personas dentro" asp-area="" asp-action="Login">Login</a>
+    <a class="nav-link cotizaciones dentro" asp-area="" asp-action="Cotizacion">Buscar Cotización</a>
 </div>
+
+<p>
+    Aca puedes ver todo lo relacionado a los productos, como las <b>Marcas</b> y sus <b>Proveedores</b>, las <b>Categorias</b>
+    de los productos y los propios <b>Productos</b>
+</p>

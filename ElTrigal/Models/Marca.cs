@@ -12,11 +12,18 @@ public partial class Marca
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
 
-    [DisplayName("Marca")]
+    [DisplayName("Nombre")]
     public string? Nombre { get; set; }
 
+    [DisplayName("Proveedor")]
     public Guid? ProveedorId { get; set; }
-    
+
+    [DisplayName("Descripción")]
+    public string? Descripcion { get; set; }
+
+    [DisplayName("Especialidad de la Marca")]
+    public string? Especialidad { get; set; }
+
     public Proveedor Proveedor { get; set; }
     public List<Producto> Productos { get; set; }
 }

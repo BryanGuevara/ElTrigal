@@ -21,9 +21,9 @@ namespace ElTrigal.Controllers
         // GET: Proveedor
         public async Task<IActionResult> Index()
         {
-              return _context.Proveedors != null ? 
-                          View(await _context.Proveedors.ToListAsync()) :
-                          Problem("Entity set 'ElTrigalContext.Proveedors'  is null.");
+            return _context.Proveedors != null ?
+                View(await _context.Proveedors.ToListAsync()) :
+                Problem("Entity set 'ElTrigalContext.Proveedors'  is null.");
         }
 
         // GET: Proveedor/Details/5
@@ -35,6 +35,7 @@ namespace ElTrigal.Controllers
             }
 
             var proveedor = await _context.Proveedors
+                .Include(p => p.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (proveedor == null)
             {
@@ -51,13 +52,10 @@ namespace ElTrigal.Controllers
         }
 
         // POST: Proveedor/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre")] Proveedor proveedor)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,SitioWeb,Descripcion,DescripcionCorta,Direccion,Telefono,ServicioTel,ServicioCorreo,AtencionTel,AtencionCorreo,GerenciaTel,GerenciaCorreo,DespachoTel,DespachoCorreo,CobrosTel,CobrosCorreo,CondicionPago")] Proveedor proveedor)
         {
-
                 proveedor.Id = Guid.NewGuid();
                 _context.Add(proveedor);
                 await _context.SaveChangesAsync();
@@ -81,11 +79,9 @@ namespace ElTrigal.Controllers
         }
 
         // POST: Proveedor/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre")] Proveedor proveedor)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,SitioWeb,Descripcion,DescripcionCorta,Direccion,Telefono,ServicioTel,ServicioCorreo,AtencionTel,AtencionCorreo,GerenciaTel,GerenciaCorreo,DespachoTel,DespachoCorreo,CobrosTel,CobrosCorreo,CondicionPago")] Proveedor proveedor)
         {
             if (id != proveedor.Id)
             {
@@ -109,8 +105,8 @@ namespace ElTrigal.Controllers
                     }
                 }
 
-            return View(proveedor);
-        }
+                return RedirectToAction(nameof(Index));
+            }
 
         // GET: Proveedor/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
@@ -144,14 +140,14 @@ namespace ElTrigal.Controllers
             {
                 _context.Proveedors.Remove(proveedor);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProveedorExists(Guid id)
         {
-          return (_context.Proveedors?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Proveedors?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<ElTrigal.Models.Proveedor>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Proveedor";
     Layout = null;
 }
 <link rel="stylesheet" href="~/css/productos.css" />
 
-<h1>Index</h1>
+<h1>Proveedor</h1>
 
 <p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
 <p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
@@ -27,9 +27,9 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Eliminar</a>
             </td>
         </tr>
 }

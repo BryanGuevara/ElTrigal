@@ -6,21 +6,243 @@
 }
 <link rel="stylesheet" href="~/css/productos.css" />
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Nombre)</h1>
 
 <div>
-    <h4>Proveedor</h4>
-    <hr />
+    @if (Model.CondicionPago != null ||
+    Model.SitioWeb != null || Model.Direccion != null)
+    {
+        <hr />
+    }
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
+       @if (Model.CondicionPago != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CondicionPago)
+            </dt>
+
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CondicionPago)
         </dd>
+        }
+        @if (Model.SitioWeb != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SitioWeb)
+            </dt>
+            <dd class="col-sm-10">
+                <a href="@Html.DisplayFor(model => model.SitioWeb)">Visitar</a>
+        </dd>
+        }
+        @if (Model.Direccion != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Direccion)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Direccion)
+            </dd>
+        }
     </dl>
+    @if (Model.Telefono != null)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Telefono)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Telefono)
+            </dd>
+        </dl>
+    }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <h4>Marcas (@Model.Marca.Count())</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Descripción</th>
+                <th>Especialidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int contador = 1;
+            }
+            @foreach (var marca in Model.Marca)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => marca.Nombre)</td>
+                    <td>@Html.DisplayFor(m => marca.Descripcion)</td>
+                    <td>@Html.DisplayFor(m => marca.Especialidad)</td>
+                </tr>
+                contador++;
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+
+
+    @if (Model.ServicioTel != null || Model.ServicioCorreo != null)
+    {
+ <h4>Centro de Servicio</h4>
+<table class="table">
+    <thead>
+        <tr>
+            @if (Model.ServicioTel != null)
+                {
+                    <th>Telefono</th>
+                }
+            @if (Model.ServicioCorreo != null)
+                {
+                    <th>Correo</th>
+                }
+            </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @if (Model.ServicioTel != null)
+                {
+                    <td>@Html.DisplayFor(model => model.ServicioTel)
+                    </td>
+                }
+               @if (Model.ServicioCorreo != null)
+                {
+                    <td>@Html.DisplayFor(model => model.ServicioCorreo)
+                    </td>
+                }
+            </tr>
+    </tbody>
+</table>
+    }
+@if (Model.AtencionCorreo != null || Model.AtencionTel != null)
+    {
+        <h4>Atencion a Cliente</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    @if (Model.AtencionTel != null)
+                    {
+                        <th>Telefono</th>
+                    }
+                    @if (Model.AtencionCorreo != null)
+                    {
+                        <th>Correo</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @if (Model.AtencionTel != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.AtencionTel)</td>
+                    }
+                    @if (Model.AtencionCorreo != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.AtencionCorreo)</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    }
+    @if (Model.GerenciaCorreo != null || Model.GerenciaTel != null)
+    {
+        <h4>Gerencia Comercial</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    @if (Model.GerenciaTel != null)
+                    {
+                        <th>Telefono</th>
+                    }
+                    @if (Model.GerenciaCorreo != null)
+                    {
+                        <th>Correo</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @if (Model.GerenciaTel != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.GerenciaTel)</td>
+                    }
+                    @if (Model.GerenciaCorreo != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.GerenciaCorreo)</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    }
+   @if (Model.DespachoTel != null || Model.DespachoCorreo != null)
+    {
+        <h4>Despachos</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    @if (Model.DespachoTel != null)
+                    {
+                        <th>Telefono</th>
+                    }
+                    @if (Model.DespachoCorreo != null)
+                    {
+                        <th>Correo</th>
+                    }
+                </tr>
+    </thead>
+    <tbody>
+        <tr>
+                    @if (Model.DespachoTel != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.DespachoTel)</td>
+                    }
+                    @if (Model.DespachoCorreo != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.DespachoCorreo)</td>
+                    }
+                </tr>
+    </tbody>
+</table>
+    }
+    @if (Model.CobrosTel != null || Model.CobrosCorreo != null)
+    {
+<h4>Creditos y Cobros</h4>
+<table class="table">
+    <thead>
+        <tr>
+                    @if (Model.CobrosTel != null)
+                    {
+                        <th>Telefono</th>
+                    }
+                    @if (Model.CobrosCorreo != null)
+                    {
+                        <th>Correo</th>
+                    }
+                </tr>
+    </thead>
+    <tbody>
+        <tr>
+                    @if (Model.CobrosTel != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.CobrosTel)</td>
+                    }
+                    @if (Model.CobrosCorreo != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.CobrosCorreo)</td>
+                    }
+                </tr>
+    </tbody>
+</table>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> 
     <a asp-action="Index">Back to List</a>
+</div>
+
+<div>
+    <h5 style="white-space: pre-line;">@Html.DisplayFor(model => model.Descripcion)</h5>
 </div>

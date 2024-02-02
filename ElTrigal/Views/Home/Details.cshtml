@@ -1,0 +1,50 @@
+﻿@model ElTrigal.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalles del Producto";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/productos.css">
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+<h1>Detalles del Producto</h1>
+
+<div>
+    <h2>
+        @Html.DisplayFor(model => model.Nombre)
+    </h2>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Código</td>
+                <td>Marca</td>
+                <td>Categoría</td>
+                <td>Cantidad</td>
+                <td>Precio</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Codigo)</td>
+                <td>@Html.DisplayFor(model => model.Marca.Nombre)</td>
+                <td>@Html.DisplayFor(model => model.Categoria.Nombre)</td>
+                <td>@Html.DisplayFor(model => model.Cantidad)</td>
+                <td>@Html.DisplayFor(model => model.Precio) @Html.DisplayFor(model => model.Ventas)</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align:center;">Descripción</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align:center;">@Html.DisplayFor(model => model.Descripcion)</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<div>
+    <a asp-action="Index">Volver a la Lista</a>
+</div>

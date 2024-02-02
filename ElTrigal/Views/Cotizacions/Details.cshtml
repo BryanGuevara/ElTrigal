@@ -1,0 +1,183 @@
+﻿@model ElTrigal.Models.Cotizacion
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+<div>
+    <hr /><table class="table invisible" style="border: 0;">
+        <thead>
+            <tr>
+            <tr>
+                <th style="background-color: #1a1a1a; font-size:30px;" colspan=" 5">Agro Ferreteria "El Trigal"</th>
+            </tr>
+            <tr>
+                <th style="background-color: #1a1a1a;" colspan="3">Direccion</th>
+
+                <th style="background-color: #1a1a1a;">Telefono</th>
+
+                <th style="background-color: #1a1a1a;">Razon Social</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: #1a1a1a;">La LIbertad</td>
+
+                <td style="background-color: #1a1a1a;">Ciudad Arce</td>
+
+                <td style="background-color: #1a1a1a;">Av. Masferrer, Casa #2</td>
+
+                <td style="background-color: #1a1a1a;">(+503)7743-7365</td>
+
+                <td style="background-color: #1a1a1a;">Mario Argumedo</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table invisible" style="border: 0;">
+        <thead>
+            <tr>
+            <tr>
+                <th style="background-color: #1a1a1a; font-size:30px;" colspan="6">@Html.DisplayFor(model => model.Cliente.Nombre)</th>
+            </tr>
+            <tr>
+                <th style="background-color: #1a1a1a;">@Html.DisplayNameFor(model => model.Cliente.Dui)</th>
+
+                <th style="background-color: #1a1a1a;">@Html.DisplayNameFor(model => model.Cliente.Telefono)</th>
+
+                <th style="background-color: #1a1a1a;">@Html.DisplayNameFor(model => model.Cliente.Correo)</th>
+
+                <th style="background-color: #1a1a1a;" colspan=" 3">Direccion</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Dui)</td>
+            
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Telefono)</td>
+            
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Correo)</td>
+            
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Departamento)</td>
+            
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Municipio)</td>
+            
+                <td style="background-color: #1a1a1a;">@Html.DisplayFor(model => model.Cliente.Direccion)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <hr />
+    <table class="table invisible" style="border: 0;">
+        <thead>
+            <tr>
+            <tr>
+                <th style="background-color: #1a1a1a; font-size:30px; border: 0;" colspan=" 6">Cotizacion @Html.DisplayFor(model => model.CodigoFactura)</th>
+            </tr>
+            <tr>
+                <th style="background-color: #1a1a1a; border: 0;">@Html.DisplayNameFor(model => model.Fecha)</th>
+
+                <th style="background-color: #1a1a1a; border: 0;">@Html.DisplayNameFor(model => model.Vencimiento)</th>
+
+                <th style="background-color: #1a1a1a; border: 0;">Estado</th>
+
+                <th style="background-color: #1a1a1a; border: 0;">¿Tiene IVA?</th>
+
+                <th style="background-color: #1a1a1a; border: 0;">Pago</th>
+
+                <th style="background-color: #1a1a1a; border: 0;">Cantidad Abonada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Fecha)</td>
+
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Vencimiento)</td>
+
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Entregado)</td>
+
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Iva)</td>
+
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Pagado)</td>
+
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Abono)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<link rel="stylesheet" href="~/css/cotizacion.css">
+<div>
+    <hr/>
+    <h2>Detalles  @Html.DisplayFor(model => model.CodigoPedido)</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Precio Unitario</th>
+                <th>Descuento</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model.Detalles)
+            {
+                <tr>
+                    <td>@detalle.Producto?.Codigo</td>
+                    <td>@detalle.Producto?.Nombre</td>
+                    <td>@detalle.Cantidad</td>
+                    <td>@detalle.Producto?.Ventas</td>
+                    <td>@String.Format("{0:C}", Math.Round(detalle.Producto?.Precio ?? 0, 2))</td>
+                    <td>@detalle.Descuento%</td>
+                    <td>@String.Format("{0:C}", Math.Round(((detalle.Cantidad * (detalle.Producto?.Precio ?? 0)) - ((detalle.Cantidad * (detalle.Producto?.Precio ?? 0)) * (detalle.Descuento / 100))) ?? 0, 2))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot style="border: 0;">
+            <tr>
+                <td colspan="5" style="background-color: #1a1a1a; border: 0; "></td>
+                <td style="background-color: #1a1a1a; border: 0; text-align: right;"><strong>SubTotal:</strong></td>
+                <td>@String.Format("{0:C}", Math.Round(ViewBag.SubTotal, 2))</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="background-color: #1a1a1a; border: 0; "></td>
+                <td style="background-color: #1a1a1a; border: 0; text-align: right;"><strong>IVA:</strong></td>
+                <td>@String.Format("{0:C}", Math.Round(ViewBag.IVA, 2))</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="background-color: #1a1a1a; border: 0; "></td>
+                <td style="background-color: #1a1a1a; border: 0; text-align: right;"><strong>Total:</strong></td>
+                <td>@String.Format("{0:C}", Math.Round(ViewBag.Total, 2))</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div>
+    <table class="table invisible" style="border: 0;">
+    <thead>
+        <tr>
+        <tr>
+                <th style="background-color: #1a1a1a; border: 0;">@Html.DisplayNameFor(model => model.Comentario)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td style="background-color: #1a1a1a; border: 0;">@Html.DisplayFor(model => model.Comentario)</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Editar</a>
+    <a asp-action="Index" class="ver">Regresar al Listado</a>
+</div>

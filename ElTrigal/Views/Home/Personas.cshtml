@@ -2,21 +2,30 @@
     ViewData["Title"] = "Personas";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerUsuario != true || RoleContext.CurrentRole.VerCliente != true || RoleContext.CurrentRole.VerRol != true))
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/index.css">
-
-<h2>Personas</h2>
+<h3>Personas</h3>
 <div class="container">
-    <a class="nav-link personas dentro" asp-area="" asp-controller="Home" asp-action="VerUsuario">Usuarios</a>
-    <a class="nav-link personas dentro" asp-area="" asp-controller="Home" asp-action="VerCliente">Clientes</a>
-</div>
-<h3>Mantenimiento</h3>
-<div class="container">
-    <a class="nav-link personas dentro" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
-    <a class="nav-link personas dentro" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerUsuario == true))
+    {
+        <a class="nav-link personas dentro" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCliente == true))
+    {
+        <a class="nav-link personas dentro" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerRol == true))
+    {
+        <a class="nav-link personas dentro" asp-area="" asp-controller="Rols" asp-action="Index">Roles</a>
+    }
+    <a class="nav-link text-dark salir dentro" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
 </div>
 
 
 <p>
     En Esta parte puedes ver todo lo relacionado a personas, como los <b>Clientes</b> para cotizaciones, 
-    y los propios <b>Usuarios</b> que pueden usar este sistema
+    y los propios <b>Usuarios</b> que pueden usar este sistema y los <b>Roles</b> de los Usuarios
 </p>

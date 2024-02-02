@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
     Layout = null;
 }
-<link rel="stylesheet" href="~/css/productos.css"/>
+<link rel="stylesheet" href="~/css/productos.css" />
 
 <h1>Create</h1>
 
@@ -25,6 +25,101 @@
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="SitioWeb" class="control-label"></label>
+                <input asp-for="SitioWeb" class="form-control" />
+                <span asp-validation-for="SitioWeb" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescripcionCorta" class="control-label"></label>
+                <textarea asp-for="DescripcionCorta" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DescripcionCorta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <textarea asp-for="Direccion" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <textarea asp-for="Telefono" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ServicioTel" class="control-label"></label>
+                <textarea asp-for="ServicioTel" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="ServicioTel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ServicioCorreo" class="control-label"></label>
+                <textarea asp-for="ServicioCorreo" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="ServicioCorreo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AtencionTel" class="control-label"></label>
+                <textarea asp-for="AtencionTel" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="AtencionTel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AtencionCorreo" class="control-label"></label>
+                <textarea asp-for="AtencionCorreo" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="AtencionCorreo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GerenciaTel" class="control-label"></label>
+                <textarea asp-for="GerenciaTel" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="GerenciaTel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GerenciaCorreo" class="control-label"></label>
+                <textarea asp-for="GerenciaCorreo" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="GerenciaCorreo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DespachoTel" class="control-label"></label>
+                <textarea asp-for="DespachoTel" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DespachoTel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DespachoCorreo" class="control-label"></label>
+                <textarea asp-for="DespachoCorreo" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DespachoCorreo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CobrosTel" class="control-label"></label>
+                <textarea asp-for="CobrosTel" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="CobrosTel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CobrosCorreo" class="control-label"></label>
+                <textarea asp-for="CobrosCorreo" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="CobrosCorreo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CondicionPago" class="control-label"></label>
+                <select asp-for="CondicionPago" class="form-control">
+                    <option value="">Seleccione una condición de pago</option>
+                    <option value="Al Contado">Al Contado</option>
+                    <option value="Credito">Crédito</option>
+                </select>
+                <span asp-validation-for="CondicionPago" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -34,4 +129,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ElTrigal.Models.Cotizacion>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cotizacion.css">
+
+<h1>Cotizaciones</h1>
+
+<p><a asp-action="Create">Crear Cotización</a></p>
+<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+
+<form method="get" action="@Url.Action("Index", "Cotizacions")" class="form-inline">
+    <table>
+        <thead>
+            <tr>
+                <th>Código de Factura</th>
+                <th>Despues de</th>
+                <th>Antes de</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <tb><input type="text" id="codigoFactura" name="codigoFactura" value="@ViewData["CodigoFactura"]" class="form-control" /></tb>
+            <tb>
+                <input type="date" id="fechaDespuesDe" name="fechaDespuesDe" value="@ViewData["FechaDespuesDe"]" class="form-control" />
+            </tb>
+            <tb>
+                <input type="date" id="fechaAntesDe" name="fechaAntesDe" value="@ViewData["FechaAntesDe"]" class="form-control" />
+            </tb>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tb cospan="3"><button type="submit" class="btn btn-primary">Buscar</button></tb>
+        </tfoot>
+    </table>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoFactura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vencimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoFactura)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vencimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -18,14 +18,12 @@ namespace ElTrigal.Controllers
             _context = context;
         }
 
-        // GET: Producto
         public async Task<IActionResult> Index()
         {
             var elTrigalContext = _context.Productos.Include(p => p.Categoria).Include(p => p.Marca);
             return View(await elTrigalContext.ToListAsync());
         }
 
-        // GET: Producto/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Productos == null)
@@ -45,7 +43,6 @@ namespace ElTrigal.Controllers
             return View(producto);
         }
 
-        // GET: Producto/Create
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre");
@@ -53,21 +50,16 @@ namespace ElTrigal.Controllers
             return View();
         }
 
-        // POST: Producto/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,MarcaId,CategoriaId,Precio")] Producto producto)
+        public async Task<IActionResult> Create([Bind("Id,Codigo,Nombre,Descripcion,MarcaId,CategoriaId,Cantidad,Ventas,Precio")] Producto producto)
         {
             producto.Id = Guid.NewGuid();
             _context.Add(producto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
         }
 
-        // GET: Producto/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Productos == null)
@@ -86,11 +78,9 @@ namespace ElTrigal.Controllers
         }
 
         // POST: Producto/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,MarcaId,CategoriaId,Precio")] Producto producto)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Codigo,Nombre,Descripcion,MarcaId,CategoriaId,Cantidad,Ventas,Precio")] Producto producto)
         {
             if (id != producto.Id)
             {
@@ -113,6 +103,49 @@ namespace ElTrigal.Controllers
                     throw;
                 }
             }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Entrada(Guid id)
+        {
+            ViewBag.ProductId = id; 
+            return View();
+        }
+
+        // POST: Producto/ProcesarEntrada
+        [HttpPost]
+        public async Task<IActionResult> ProcesarEntrada(Guid id, int cantidad)
+        {
+            if (id == null || cantidad <= 0)
+            {
+                return BadRequest();
+            }
+
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            producto.Cantidad += cantidad;
+
+            try
+            {
+                _context.Update(producto);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductoExists(producto.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

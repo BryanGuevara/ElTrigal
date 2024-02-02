@@ -1,0 +1,16 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Cotizacion";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/cotizacion.css">
+<h1>Ingresar Código de Cotización</h1>
+
+<form asp-controller="Acceso" asp-action="Cotizacion" method="post">
+    <div class="form-group">
+        <label for="codigoCotizacion">Código de Cotización:</label>
+        <input type="text" class="form-control" id="codigoCotizacion" name="codigoCotizacion">
+    </div>
+    <button type="submit" class="btn btn-primary">Ver Detalles</button>
+</form>

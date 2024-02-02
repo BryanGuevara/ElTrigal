@@ -51,7 +51,7 @@ a {
 
 .form-group {
     margin: 0 auto 15px; 
-    max-width: 200px; 
+    max-width: 90%; 
 }
 
 dl {
@@ -79,14 +79,6 @@ textarea {
     box-sizing: border-box;
     background-color: #ffffff;
 }
-
-    input:hover,
-    select:hover,
-    textarea:hover {
-        border-color: #007BFF;
-        filter: brightness(50%);
-        transform: scale(1.05);
-    }
 
 label {
     display: block;

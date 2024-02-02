@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Entrada de Producto";
+}
+
+<h1>Entrada de Producto</h1>
+
+<form asp-action="ProcesarEntrada">
+    <input type="hidden" name="id" value="@ViewBag.ProductId" />
+    <label>Cantidad de productos ingresados:</label>
+    <input type="number" name="cantidad" />
+    <input type="submit" value="Procesar Entrada" />
+</form>

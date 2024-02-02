@@ -18,9 +18,9 @@ namespace ElTrigal.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(Guid? cotizacionId)
+        public async Task<IActionResult> Index(Guid? perteneceId)
         {
-            if (cotizacionId == null)
+            if (perteneceId == null)
             {
                 return NotFound();
             }
@@ -28,7 +28,7 @@ namespace ElTrigal.Controllers
             var detalles = await _context.Detalle
                 .Include(d => d.Cotizacion)
                 .Include(d => d.Producto)
-                .Where(d => d.CotizacionId == cotizacionId)
+                .Where(d => d.PerteneceId == perteneceId)
                 .ToListAsync();
 
             if (detalles == null)
@@ -36,14 +36,10 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
-            ViewData["cotizacionId"] = cotizacionId;
+            ViewData["PerteneceId"] = perteneceId;
 
             return View(detalles);
         }
-
-
-
-
 
         // GET: Detalles/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -65,30 +61,29 @@ namespace ElTrigal.Controllers
             return View(detalle);
         }
 
-        public IActionResult Create(Guid? cotizacionId)
+        public IActionResult Create(Guid? perteneceId)
         {
-            if (cotizacionId == null || !_context.Cotizaciones.Any(c => c.Id == cotizacionId))
+            if (perteneceId == null || !_context.Cotizaciones.Any(c => c.Id == perteneceId))
             {
                 return NotFound();
             }
 
             ViewData["ProductoId"] = new SelectList(_context.Productos, "Id", "Nombre");
-
-            ViewBag.CotizacionId = cotizacionId;
+            ViewBag.PerteneceId = perteneceId;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CotizacionId,ProductoId,Cantidad")] Detalle detalle)
+        public async Task<IActionResult> Create([Bind("Id,PerteneceId,ProductoId,Descuento, Cantidad")] Detalle detalle)
         {
                 detalle.Id = Guid.NewGuid();
                 _context.Add(detalle);
                 await _context.SaveChangesAsync();
-            Guid cotizacionId = detalle.CotizacionId;
-            return RedirectToAction(nameof(Index), new { cotizacionId });
-        }
+                return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
+            }
+
 
 
         // GET: Detalles/Edit/5
@@ -104,20 +99,21 @@ namespace ElTrigal.Controllers
             {
                 return NotFound();
             }
-            ViewData["CotizacionId"] = new SelectList(_context.Cotizaciones, "Id", "Id", detalle.CotizacionId);
+
             ViewData["ProductoId"] = new SelectList(_context.Productos, "Id", "Nombre", detalle.ProductoId);
             return View(detalle);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,CotizacionId,ProductoId,Cantidad")] Detalle detalle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,PerteneceId,ProductoId,Cantidad")] Detalle detalle)
         {
             if (id != detalle.Id)
             {
                 return NotFound();
             }
-            try
+
+                try
                 {
                     _context.Update(detalle);
                     await _context.SaveChangesAsync();
@@ -132,14 +128,14 @@ namespace ElTrigal.Controllers
                     {
                         throw;
                     }
-             }
-            return RedirectToAction("Index", new { cotizacionId = detalle.CotizacionId });
-        }
+                }
+                return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
+            }
 
-        // GET: Detalles/Delete/{id}
+        // GET: Detalles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
+            if (id == null || _context.Detalle == null)
             {
                 return NotFound();
             }
@@ -157,7 +153,7 @@ namespace ElTrigal.Controllers
             return View(detalle);
         }
 
-        // POST: Detalles/Delete/{id}
+        // POST: Detalles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -171,12 +167,12 @@ namespace ElTrigal.Controllers
             _context.Detalle.Remove(detalle);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", new { cotizacionId = detalle.CotizacionId });
+            return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
         }
 
         private bool DetalleExists(Guid id)
         {
-          return (_context.Detalle?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Detalle?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

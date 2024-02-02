@@ -21,6 +21,16 @@
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="MarcaId" class="control-label"></label>
                 <select asp-for="MarcaId" class="form-control" asp-items="ViewBag.MarcaId"></select>
                 <span asp-validation-for="MarcaId" class="text-danger"></span>
@@ -30,6 +40,29 @@
                 <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Cantidad" class="control-label"></label>
+                <input asp-for="Cantidad" class="form-control" />
+                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            </div>
+          <div class="form-group">
+                <label asp-for="Ventas" class="control-label"></label>
+                <select asp-for="Ventas" class="form-control">
+                    <option value="C/U">C/U - Cada Uno</option>
+                    <option value="C/P">C/P - Cada Par</option>
+                    <option value="C/D">C/D - Cada Docena</option>
+                    <option value="C/C">C/C - Cada Ciento</option>
+                    <option value="lb">lb - Cada Libra</option>
+                    <option value="mtr">mtr - Cada Metro</option>
+                    <option value="yrd">yrd - Cada Yarda</option>
+                    <option value="pie">pie - Cada Pie</option>
+                    <option value="@@">@@ - Cada Arroba</option>
+                    <option value="ton">ton - Cada Tonelada</option>
+                    <option value="kg">kg - Cada Kilogramo</option>
+                </select>
+                <span asp-validation-for="Ventas" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Precio" class="control-label"></label>
                 <input asp-for="Precio" class="form-control" />
@@ -45,4 +78,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

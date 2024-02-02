@@ -3,12 +3,24 @@
     Layout = null;
 }
 <link rel="stylesheet" href="~/css/index.css">
-
 <div class="container">
-    <a class="nav-link productos dentro" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
-    <a class="nav-link productos dentro" asp-area="" asp-controller="Marcas" asp-action="Index">Marcas</a>
-    <a class="nav-link productos dentro" asp-area="" asp-controller="Proveedor" asp-action="Index">Proveedor</a>
-    <a class="nav-link productos dentro" asp-area="" asp-controller="Categoria" asp-action="Index">Categorias</a>
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos == true))
+    {
+        <a class="nav-link productos dentro" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerMarca == true))
+    {
+        <a class="nav-link productos dentro" asp-area="" asp-controller="Marcas" asp-action="Index">Marcas</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProveedor == true))
+    {
+        <a class="nav-link productos dentro" asp-area="" asp-controller="Proveedor" asp-action="Index">Proveedor</a>
+    }
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCategoria == true))
+    {
+        <a class="nav-link productos dentro" asp-area="" asp-controller="Categoria" asp-action="Index">Categorias</a>
+    }
+    <a class="nav-link text-dark salir dentro" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
 </div>
 
 <p>

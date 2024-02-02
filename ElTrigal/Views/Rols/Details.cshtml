@@ -1,0 +1,123 @@
+﻿@model ElTrigal.Models.Rol
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/personas.css">
+
+<h1>Details</h1>
+
+<div>
+    <h4>Rol</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VerTodo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerTodo)
+        </dd>
+        <hr />
+        <!-- Permisos de Usuarios -->
+        <dt class="col-sm-2">Usuarios</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerUsuario) VerUsuario 
+            @Html.DisplayFor(model => model.EditUsuario) EditUsuario 
+            @Html.DisplayFor(model => model.EliUsuario) EliUsuario 
+            @Html.DisplayFor(model => model.CrearUsuario) CrearUsuario 
+            @Html.DisplayFor(model => model.EditPass) EditPass
+        </dd>
+        <hr />
+        <!-- Permisos de Clientes -->
+        <dt class="col-sm-2">Clientes</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerCliente) VerCliente 
+            @Html.DisplayFor(model => model.EditCliente) EditCliente 
+            @Html.DisplayFor(model => model.EliCliente) EliCliente 
+            @Html.DisplayFor(model => model.CrearCliente) CrearCliente
+        </dd>
+        <hr />
+        <!-- Permisos de Proveedores -->
+        <dt class="col-sm-2">Proveedores</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerProveedor) VerProveedor 
+            @Html.DisplayFor(model => model.EditProveedor) EditProveedor 
+            @Html.DisplayFor(model => model.EliProveedor) EliProveedor 
+            @Html.DisplayFor(model => model.CrearProveedor) CrearProveedor
+        </dd>
+        <hr />
+        <!-- Permisos de Marca -->
+        <dt class="col-sm-2">Marcas</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerMarca) VerMarca 
+            @Html.DisplayFor(model => model.EditMarca) EditMarca 
+            @Html.DisplayFor(model => model.EliMarca) EliMarca 
+            @Html.DisplayFor(model => model.CrearMarca) CrearMarca
+        </dd>
+        <hr />
+        <!-- Permisos de Categoría -->
+        <dt class="col-sm-2">Categorías</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerCategoria) VerCategoria 
+            @Html.DisplayFor(model => model.EditCategoria) EditCategoria 
+            @Html.DisplayFor(model => model.EliCategoria) EliCategoria 
+            @Html.DisplayFor(model => model.CrearCategoria) CrearCategoria
+        </dd>
+        <hr />
+        <!-- Permisos de Productos -->
+        <dt class="col-sm-2">Productos</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerProductos) VerProductos 
+            @Html.DisplayFor(model => model.EditProductos) EditProductos 
+            @Html.DisplayFor(model => model.EliProductos) EliProductos 
+            @Html.DisplayFor(model => model.CrearProductos) CrearProductos 
+            @Html.DisplayFor(model => model.VerCatalogo) VerCatálogo
+            @Html.DisplayFor(model => model.Pedido) Hacer Pedido
+        </dd>
+        <hr />
+        <!-- Permisos de Cotizaciones -->
+        <dt class="col-sm-2">Cotizaciones</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerCotizaciones) VerCotizaciones 
+            @Html.DisplayFor(model => model.EditCotizaciones) EditCotizaciones 
+            @Html.DisplayFor(model => model.EliCotizaciones) EliCotizaciones 
+            @Html.DisplayFor(model => model.CrearCotizaciones) CrearCotizaciones
+        </dd>
+        <hr />
+        <!-- Permisos de Ventas -->
+        <dt class="col-sm-2">Ventas</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerVentas) VerVentas 
+            @Html.DisplayFor(model => model.EditVentas) EditVentas 
+            @Html.DisplayFor(model => model.EliVentas) EliVentas 
+            @Html.DisplayFor(model => model.CrearVentas)
+        </dd>
+        <hr />
+        <!-- Permisos de Rol -->
+        <dt class="col-sm-2">Roles</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerRol) VerRol 
+            @Html.DisplayFor(model => model.EditRol) EditRol 
+            @Html.DisplayFor(model => model.EliRol) EliRol 
+            @Html.DisplayFor(model => model.CrearRol)
+        </dd>
+        <hr />
+        <!-- Permisos de Análisis -->
+        <dt class="col-sm-2">Análisis</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VerAnalisis) VerAnalisis
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Editar</a> 
+    <a asp-action="Index">Back to List</a>
+</div>

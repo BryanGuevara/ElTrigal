@@ -1,0 +1,242 @@
+﻿@model ElTrigal.Models.Rol
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/personas.css">
+
+<h1>Create</h1>
+
+<h4>Rol</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <!-- Permisos de Ver Todo -->
+        <h4>Ver Todo</h4>
+        <div class="form-group">
+            <label asp-for="VerTodo" class="control-label"></label>
+            <input asp-for="VerTodo" class="form-control" type="checkbox" />
+            <span asp-validation-for="VerTodo" class="text-danger"></span>
+        </div>
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" type="text" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Usuarios -->
+            <h4>Usuario</h4>
+            <div class="form-group">
+                <label asp-for="VerUsuario" class="control-label"></label>
+                <input asp-for="VerUsuario" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditUsuario" class="control-label"></label>
+                <input asp-for="EditUsuario" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliUsuario" class="control-label"></label>
+                <input asp-for="EliUsuario" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearUsuario" class="control-label"></label>
+                <input asp-for="CrearUsuario" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearUsuario" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Clientes -->
+            <h4>Clientes</h4>
+            <div class="form-group">
+                <label asp-for="VerCliente" class="control-label"></label>
+                <input asp-for="VerCliente" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditCliente" class="control-label"></label>
+                <input asp-for="EditCliente" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliCliente" class="control-label"></label>
+                <input asp-for="EliCliente" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearCliente" class="control-label"></label>
+                <input asp-for="CrearCliente" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearCliente" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Proveedores -->
+            <h4>Proveedores</h4>
+            <div class="form-group">
+                <label asp-for="VerProveedor" class="control-label"></label>
+                <input asp-for="VerProveedor" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerProveedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditProveedor" class="control-label"></label>
+                <input asp-for="EditProveedor" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditProveedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliProveedor" class="control-label"></label>
+                <input asp-for="EliProveedor" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliProveedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearProveedor" class="control-label"></label>
+                <input asp-for="CrearProveedor" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearProveedor" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Marcas -->
+            <h4>Marcas</h4>
+            <div class="form-group">
+                <label asp-for="VerMarca" class="control-label"></label>
+                <input asp-for="VerMarca" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerMarca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditMarca" class="control-label"></label>
+                <input asp-for="EditMarca" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditMarca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliMarca" class="control-label"></label>
+                <input asp-for="EliMarca" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliMarca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearMarca" class="control-label"></label>
+                <input asp-for="CrearMarca" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearMarca" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Categorías -->
+            <h4>Categorías</h4>
+            <div class="form-group">
+                <label asp-for="VerCategoria" class="control-label"></label>
+                <input asp-for="VerCategoria" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerCategoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditCategoria" class="control-label"></label>
+                <input asp-for="EditCategoria" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditCategoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliCategoria" class="control-label"></label>
+                <input asp-for="EliCategoria" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliCategoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearCategoria" class="control-label"></label>
+                <input asp-for="CrearCategoria" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearCategoria" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Productos -->
+            <h4>Productos</h4>
+            <div class="form-group">
+                <label asp-for="VerProductos" class="control-label"></label>
+                <input asp-for="VerProductos" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerProductos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditProductos" class="control-label"></label>
+                <input asp-for="EditProductos" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditProductos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliProductos" class="control-label"></label>
+                <input asp-for="EliProductos" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliProductos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearProductos" class="control-label"></label>
+                <input asp-for="CrearProductos" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearProductos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VerCatalogo" class="control-label"></label>
+                <input asp-for="VerCatalogo" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerCatalogo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pedido" class="control-label"></label>
+                <input asp-for="Pedido" class="form-control" type="checkbox" />
+                <span asp-validation-for="Pedido" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Cotizaciones -->
+            <h4>Cotizaciones</h4>
+            <div class="form-group">
+                <label asp-for="VerCotizaciones" class="control-label"></label>
+                <input asp-for="VerCotizaciones" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerCotizaciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditCotizaciones" class="control-label"></label>
+                <input asp-for="EditCotizaciones" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditCotizaciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliCotizaciones" class="control-label"></label>
+                <input asp-for="EliCotizaciones" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliCotizaciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearCotizaciones" class="control-label"></label>
+                <input asp-for="CrearCotizaciones" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearCotizaciones" class="text-danger"></span>
+            </div>
+
+            <!-- Permisos de Ventas -->
+            <h4>Ventas</h4>
+            <div class="form-group">
+                <label asp-for="VerVentas" class="control-label"></label>
+                <input asp-for="VerVentas" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerVentas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditVentas" class="control-label"></label>
+                <input asp-for="EditVentas" class="form-control" type="checkbox" />
+                <span asp-validation-for="EditVentas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EliVentas" class="control-label"></label>
+                <input asp-for="EliVentas" class="form-control" type="checkbox" />
+                <span asp-validation-for="EliVentas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrearVentas" class="control-label"></label>
+                <input asp-for="CrearVentas" class="form-control" type="checkbox" />
+                <span asp-validation-for="CrearVentas" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div> 
+            
+            <h4>Análisis</h4>
+            <div class="form-group">
+                <label asp-for="VerAnalisis" class="control-label"></label>
+                <input asp-for="VerAnalisis" class="form-control" type="checkbox" />
+                <span asp-validation-for="VerAnalisis" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
