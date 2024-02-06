@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="~/css/personas.css">
 
 
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.CrearCliente)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+
 <h1>Create Cliente</h1>
 
 <hr />

@@ -2,13 +2,44 @@
     ViewData["Title"] = "Catalogo";
     Layout = null;
 }
-@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerCatalogo)
-{
-    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
-}
 <link rel="stylesheet" href="~/css/index.css">
 <style>
-    
+    a.btn {
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px 12px;
+        border: 1px solid #ffffff;
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        display: inline-block;
+    }
+
+        a.btn:hover {
+            background-color: #8B8B00;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+    input,
+    select,
+    textarea {
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        width: 50%;
+        box-sizing: border-box;
+        background-color: #ffffff;
+    }
+
+        input:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #8B8B00;
+            filter: brightness(50%);
+            transform: scale(1.05);
+        }
+
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -72,13 +103,15 @@
 <h1>@ViewBag.Proveedor</h1>
 
 <label class="marca" for="marca-filter">Filtrar por Marca:</label>
-<select id="marca-filter" class="marca">
+<select id="marca-filter" class="marca" style="text-align:center;">
     <option value="">Todas</option>
     @foreach (var marca in ViewBag.Marcas)
     {
         <option value="@marca.Id">@marca.Nombre</option>
     }
 </select>
+
+<p><a class="nav-link text-dark btn" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
 
 <hr />
 @foreach (var producto in ViewBag.Productos)

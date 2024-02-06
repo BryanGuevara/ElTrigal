@@ -14,7 +14,54 @@ namespace ElTrigal.Controllers
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
-            RoleContext.Configure(_httpContextAccessor);
+        }
+        public async Task<IActionResult> DetailsCat(Guid? id)
+        {
+            if (id == null || _context.Productos == null)
+            {
+                return NotFound();
+            }
+
+            var producto = await _context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return View(producto);
+        }
+        public IActionResult Catalogo()
+        {
+            var proveedores = _context.Proveedors.ToList() ?? new List<Proveedor>();
+
+            ViewBag.Proveedores = proveedores;
+
+            return View();
+        }
+        public IActionResult VerCatalogo(Guid id)
+        {
+            var proveedor = _context.Proveedors
+                .Include(p => p.Marca)
+                .ThenInclude(m => m.Productos)
+                .ThenInclude(p => p.Categoria)
+                .FirstOrDefault(p => p.Id == id);
+
+
+            if (proveedor == null)
+            {
+                return NotFound();
+            }
+
+            var productos = proveedor.Marca.SelectMany(m => m.Productos).ToList();
+            ViewBag.Productos = productos;
+
+            var marcas = productos.Select(p => p.Marca).Distinct().ToList();
+            ViewBag.Marcas = marcas;
+
+            return View();
         }
 
         public IActionResult Index()
@@ -87,6 +134,7 @@ namespace ElTrigal.Controllers
                 if (rolUsuario != null)
                 {
                     RoleContext.CurrentRole = rolUsuario;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -101,6 +149,7 @@ namespace ElTrigal.Controllers
                 return View();
             }
         }
+
         private bool CotizacionExists(Guid id)
         {
             return _context.Cotizaciones.Any(e => e.Id == id);

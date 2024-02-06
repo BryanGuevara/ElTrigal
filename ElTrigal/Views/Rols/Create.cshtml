@@ -4,7 +4,10 @@
     ViewData["Title"] = "Create";
     Layout = null;
 }
-
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.CrearRol)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/personas.css">
 
 <h1>Create</h1>
@@ -13,14 +16,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <!-- Permisos de Ver Todo -->
-        <h4>Ver Todo</h4>
-        <div class="form-group">
-            <label asp-for="VerTodo" class="control-label"></label>
-            <input asp-for="VerTodo" class="form-control" type="checkbox" />
-            <span asp-validation-for="VerTodo" class="text-danger"></span>
-        </div>
-
+     
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -29,210 +25,335 @@
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
 
+           <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="2">Esspeciales</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerTodo" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerAnalisis" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerTodo" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerTodo" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerAnalisis" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerAnalisis" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
+
             <!-- Permisos de Usuarios -->
-            <h4>Usuario</h4>
-            <div class="form-group">
-                <label asp-for="VerUsuario" class="control-label"></label>
-                <input asp-for="VerUsuario" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerUsuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditUsuario" class="control-label"></label>
-                <input asp-for="EditUsuario" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditUsuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliUsuario" class="control-label"></label>
-                <input asp-for="EliUsuario" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliUsuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearUsuario" class="control-label"></label>
-                <input asp-for="CrearUsuario" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearUsuario" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Usuarios</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerUsuario" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditUsuario" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliUsuario" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearUsuario" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerUsuario" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerUsuario" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditUsuario" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditUsuario" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliUsuario" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliUsuario" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearUsuario" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearUsuario" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Clientes -->
-            <h4>Clientes</h4>
-            <div class="form-group">
-                <label asp-for="VerCliente" class="control-label"></label>
-                <input asp-for="VerCliente" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditCliente" class="control-label"></label>
-                <input asp-for="EditCliente" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliCliente" class="control-label"></label>
-                <input asp-for="EliCliente" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearCliente" class="control-label"></label>
-                <input asp-for="CrearCliente" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearCliente" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Clientes</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerCliente" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditCliente" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliCliente" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearCliente" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerCliente" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerCliente" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditCliente" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditCliente" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliCliente" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliCliente" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearCliente" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearCliente" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Proveedores -->
-            <h4>Proveedores</h4>
-            <div class="form-group">
-                <label asp-for="VerProveedor" class="control-label"></label>
-                <input asp-for="VerProveedor" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditProveedor" class="control-label"></label>
-                <input asp-for="EditProveedor" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliProveedor" class="control-label"></label>
-                <input asp-for="EliProveedor" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearProveedor" class="control-label"></label>
-                <input asp-for="CrearProveedor" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearProveedor" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Proveedores</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerProveedor" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditProveedor" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliProveedor" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearProveedor" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerProveedor" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerProveedor" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditProveedor" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditProveedor" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliProveedor" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliProveedor" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearProveedor" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearProveedor" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Marcas -->
-            <h4>Marcas</h4>
-            <div class="form-group">
-                <label asp-for="VerMarca" class="control-label"></label>
-                <input asp-for="VerMarca" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerMarca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditMarca" class="control-label"></label>
-                <input asp-for="EditMarca" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditMarca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliMarca" class="control-label"></label>
-                <input asp-for="EliMarca" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliMarca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearMarca" class="control-label"></label>
-                <input asp-for="CrearMarca" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearMarca" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Marcas</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerMarca" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditMarca" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliMarca" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearMarca" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerMarca" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerMarca" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditMarca" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditMarca" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliMarca" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliMarca" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearMarca" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearMarca" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Categorías -->
-            <h4>Categorías</h4>
-            <div class="form-group">
-                <label asp-for="VerCategoria" class="control-label"></label>
-                <input asp-for="VerCategoria" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerCategoria" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditCategoria" class="control-label"></label>
-                <input asp-for="EditCategoria" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditCategoria" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliCategoria" class="control-label"></label>
-                <input asp-for="EliCategoria" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliCategoria" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearCategoria" class="control-label"></label>
-                <input asp-for="CrearCategoria" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearCategoria" class="text-danger"></span>
-            </div>
-
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Categorias</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerCategoria" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditCategoria" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliCategoria" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearCategoria" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerCategoria" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerCategoria" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditCategoria" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditCategoria" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliCategoria" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliCategoria" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearCategoria" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearCategoria" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
             <!-- Permisos de Productos -->
-            <h4>Productos</h4>
-            <div class="form-group">
-                <label asp-for="VerProductos" class="control-label"></label>
-                <input asp-for="VerProductos" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerProductos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditProductos" class="control-label"></label>
-                <input asp-for="EditProductos" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditProductos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliProductos" class="control-label"></label>
-                <input asp-for="EliProductos" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliProductos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearProductos" class="control-label"></label>
-                <input asp-for="CrearProductos" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearProductos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VerCatalogo" class="control-label"></label>
-                <input asp-for="VerCatalogo" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerCatalogo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pedido" class="control-label"></label>
-                <input asp-for="Pedido" class="form-control" type="checkbox" />
-                <span asp-validation-for="Pedido" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="5">Productos</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerProductos" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditProductos" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliProductos" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearProductos" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="Pedido" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerProductos" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerProductos" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditProductos" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditProductos" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliProductos" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliProductos" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearProductos" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearProductos" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="Pedido" class="form-control" type="checkbox" />
+                            <span asp-validation-for="Pedido" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Cotizaciones -->
-            <h4>Cotizaciones</h4>
-            <div class="form-group">
-                <label asp-for="VerCotizaciones" class="control-label"></label>
-                <input asp-for="VerCotizaciones" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerCotizaciones" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditCotizaciones" class="control-label"></label>
-                <input asp-for="EditCotizaciones" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditCotizaciones" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliCotizaciones" class="control-label"></label>
-                <input asp-for="EliCotizaciones" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliCotizaciones" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearCotizaciones" class="control-label"></label>
-                <input asp-for="CrearCotizaciones" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearCotizaciones" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Cotizaciones</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerCotizaciones" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditCotizaciones" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliCotizaciones" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearCotizaciones" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerCotizaciones" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerCotizaciones" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditCotizaciones" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditCotizaciones" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EliCotizaciones" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EliCotizaciones" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="CrearCotizaciones" class="form-control" type="checkbox" />
+                            <span asp-validation-for="CrearCotizaciones" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <hr />
+                </tbody>
+            </table>
 
             <!-- Permisos de Ventas -->
-            <h4>Ventas</h4>
-            <div class="form-group">
-                <label asp-for="VerVentas" class="control-label"></label>
-                <input asp-for="VerVentas" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerVentas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EditVentas" class="control-label"></label>
-                <input asp-for="EditVentas" class="form-control" type="checkbox" />
-                <span asp-validation-for="EditVentas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EliVentas" class="control-label"></label>
-                <input asp-for="EliVentas" class="form-control" type="checkbox" />
-                <span asp-validation-for="EliVentas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearVentas" class="control-label"></label>
-                <input asp-for="CrearVentas" class="form-control" type="checkbox" />
-                <span asp-validation-for="CrearVentas" class="text-danger"></span>
-            </div>
+            <table class="table invisible" style="border: 0;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; font-size:30px; border:0" colspan="4">Ventas</th>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="VerVentas" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EditVentas" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="EliVentas" class="control-label"></label></th>
+                        <th style="background-color: #1a1a1a; border:0;"><label asp-for="CrearVentas" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="VerVentas" class="form-control" type="checkbox" />
+                            <span asp-validation-for="VerVentas" class="text-danger"></span>
+                        </td>
+                        <td style="background-color: #1a1a1a; border:0;">
+                            <input asp-for="EditVentas" class="form-control" type="checkbox" />
+                            <span asp-validation-for="EditVentas" class="text-danger"></span>
+                        </td>
+                        <input asp-for="EliVentas" class="form-control" type="checkbox" />
+                        <span asp-validation-for="EliVentas" class="text-danger"></span>
+                        <td style="background-color: #1a1a1a; border:0;">
+                        </td>
+                        <input asp-for="CrearVentas" class="form-control" type="checkbox" />
+                        <span asp-validation-for="CrearVentas" class="text-danger"></span>
+                        <td style="background-color: #1a1a1a; border:0;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div> 
             
-            <h4>Análisis</h4>
-            <div class="form-group">
-                <label asp-for="VerAnalisis" class="control-label"></label>
-                <input asp-for="VerAnalisis" class="form-control" type="checkbox" />
-                <span asp-validation-for="VerAnalisis" class="text-danger"></span>
-            </div>
         </form>
     </div>
 </div>

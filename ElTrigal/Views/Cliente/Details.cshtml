@@ -5,6 +5,11 @@
     Layout = null;
 }
 
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.VerCliente)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+
 <link rel="stylesheet" href="~/css/personas.css">
 <style>
     .entregado-true {
@@ -134,6 +139,9 @@ else
 }
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> 
-    <a asp-action="Index">Regresar al Listado</a>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditCliente)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="edit">Editar</a>
+    }
+    <a asp-action="Index" class="ver">Regresar al Listado</a>
 </div>

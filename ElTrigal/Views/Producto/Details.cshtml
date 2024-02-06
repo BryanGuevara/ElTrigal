@@ -4,6 +4,10 @@
     ViewData["Title"] = "Details";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.EliProductos)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/personas.css">
 
 <h1>Details</h1>
@@ -62,7 +66,11 @@
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Edit</a> 
-    <a asp-action="Index">Regresar al listado</a>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditProductos)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="edit">Editar</a>
+    }
+    <a asp-action="Index" class="ver">Regresar al Listado</a>
 </div>

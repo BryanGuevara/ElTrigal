@@ -4,120 +4,342 @@
     ViewData["Title"] = "Details";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerRol)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 
 <link rel="stylesheet" href="~/css/personas.css">
 
 <h1>Details</h1>
 
+<h2>@Html.DisplayFor(model=>model.Nombre)</h2>
+
+@{
+    string ConvertirPermiso(bool permiso)
+    {
+        return permiso ? "Con permiso" : "Sin permiso";
+    }
+}
+
+<div>
+    <h4>Ingreso</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Permiso de Ingresar</td>
+                <td>@ConvertirPermiso(Model.VerTodo)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Usuarios</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Usuarios</td>
+                <td>@ConvertirPermiso(Model.VerUsuario)</td>
+            </tr>
+            <tr>
+                <td>Editar Usuarios</td>
+                <td>@ConvertirPermiso(Model.EditUsuario)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Usuarios</td>
+                <td>@ConvertirPermiso(Model.EliUsuario)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevo Usuarios</td>
+                <td>@ConvertirPermiso(Model.CrearUsuario)</td>
+            </tr>
+            <tr>
+                <td>Editar Contraseñas</td>
+                <td>@ConvertirPermiso(Model.EditPass)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Clientes</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Clientes</td>
+                <td>@ConvertirPermiso(Model.VerCliente)</td>
+            </tr>
+            <tr>
+                <td>Editar Clientes</td>
+                <td>@ConvertirPermiso(Model.EditCliente)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Clientes</td>
+                <td>@ConvertirPermiso(Model.EliCliente)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevo Cliente</td>
+                <td>@ConvertirPermiso(Model.CrearCliente)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Proveedores</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Proveedores</td>
+                <td>@ConvertirPermiso(Model.VerProveedor)</td>
+            </tr>
+            <tr>
+                <td>Editar Proveedores</td>
+                <td>@ConvertirPermiso(Model.EditProveedor)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Proveedores</td>
+                <td>@ConvertirPermiso(Model.EliProveedor)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevos Proveedores</td>
+                <td>@ConvertirPermiso(Model.CrearProveedor)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Marcas</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de las Marcas</td>
+                <td>@ConvertirPermiso(Model.VerMarca)</td>
+            </tr>
+            <tr>
+                <td>Editar Marca</td>
+                <td>@ConvertirPermiso(Model.EditMarca)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Marca</td>
+                <td>@ConvertirPermiso(Model.EliMarca)</td>
+            </tr>
+            <tr>
+                <td>Añadir nueva Marca</td>
+                <td>@ConvertirPermiso(Model.CrearMarca)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Categorías</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de las Categorías</td>
+                <td>@ConvertirPermiso(Model.VerCategoria)</td>
+            </tr>
+            <tr>
+                <td>Editar Categoría</td>
+                <td>@ConvertirPermiso(Model.EditCategoria)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Categoría</td>
+                <td>@ConvertirPermiso(Model.EliCategoria)</td>
+            </tr>
+            <tr>
+                <td>Añadir nueva Categoría</td>
+                <td>@ConvertirPermiso(Model.CrearCategoria)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Productos</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Productos</td>
+                <td>@ConvertirPermiso(Model.VerProductos)</td>
+            </tr>
+            <tr>
+                <td>Editar Productos</td>
+                <td>@ConvertirPermiso(Model.EditProductos)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Productos</td>
+                <td>@ConvertirPermiso(Model.EliProductos)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevos Productos</td>
+                <td>@ConvertirPermiso(Model.CrearProductos)</td>
+            </tr>
+            <tr>
+                <td>Hacer Pedido</td>
+                <td>@ConvertirPermiso(Model.Pedido)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Cotizaciones</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de las Cotizaciones</td>
+                <td>@ConvertirPermiso(Model.VerCotizaciones)</td>
+            </tr>
+            <tr>
+                <td>Editar Cotizaciones</td>
+                <td>@ConvertirPermiso(Model.EditCotizaciones)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Cotizaciones</td>
+                <td>@ConvertirPermiso(Model.EliCotizaciones)</td>
+            </tr>
+            <tr>
+                <td>Añadir Cotizaciones</td>
+                <td>@ConvertirPermiso(Model.CrearCotizaciones)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Ventas</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de las Ventas</td>
+                <td>@ConvertirPermiso(Model.VerVentas)</td>
+            </tr>
+            <tr>
+                <td>Editar Ventas</td>
+                <td>@ConvertirPermiso(Model.EditVentas)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Ventas</td>
+                <td>@ConvertirPermiso(Model.EliVentas)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevas Ventas</td>
+                <td>@ConvertirPermiso(Model.CrearVentas)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <div>
     <h4>Rol</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VerTodo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerTodo)
-        </dd>
-        <hr />
-        <!-- Permisos de Usuarios -->
-        <dt class="col-sm-2">Usuarios</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerUsuario) VerUsuario 
-            @Html.DisplayFor(model => model.EditUsuario) EditUsuario 
-            @Html.DisplayFor(model => model.EliUsuario) EliUsuario 
-            @Html.DisplayFor(model => model.CrearUsuario) CrearUsuario 
-            @Html.DisplayFor(model => model.EditPass) EditPass
-        </dd>
-        <hr />
-        <!-- Permisos de Clientes -->
-        <dt class="col-sm-2">Clientes</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerCliente) VerCliente 
-            @Html.DisplayFor(model => model.EditCliente) EditCliente 
-            @Html.DisplayFor(model => model.EliCliente) EliCliente 
-            @Html.DisplayFor(model => model.CrearCliente) CrearCliente
-        </dd>
-        <hr />
-        <!-- Permisos de Proveedores -->
-        <dt class="col-sm-2">Proveedores</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerProveedor) VerProveedor 
-            @Html.DisplayFor(model => model.EditProveedor) EditProveedor 
-            @Html.DisplayFor(model => model.EliProveedor) EliProveedor 
-            @Html.DisplayFor(model => model.CrearProveedor) CrearProveedor
-        </dd>
-        <hr />
-        <!-- Permisos de Marca -->
-        <dt class="col-sm-2">Marcas</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerMarca) VerMarca 
-            @Html.DisplayFor(model => model.EditMarca) EditMarca 
-            @Html.DisplayFor(model => model.EliMarca) EliMarca 
-            @Html.DisplayFor(model => model.CrearMarca) CrearMarca
-        </dd>
-        <hr />
-        <!-- Permisos de Categoría -->
-        <dt class="col-sm-2">Categorías</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerCategoria) VerCategoria 
-            @Html.DisplayFor(model => model.EditCategoria) EditCategoria 
-            @Html.DisplayFor(model => model.EliCategoria) EliCategoria 
-            @Html.DisplayFor(model => model.CrearCategoria) CrearCategoria
-        </dd>
-        <hr />
-        <!-- Permisos de Productos -->
-        <dt class="col-sm-2">Productos</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerProductos) VerProductos 
-            @Html.DisplayFor(model => model.EditProductos) EditProductos 
-            @Html.DisplayFor(model => model.EliProductos) EliProductos 
-            @Html.DisplayFor(model => model.CrearProductos) CrearProductos 
-            @Html.DisplayFor(model => model.VerCatalogo) VerCatálogo
-            @Html.DisplayFor(model => model.Pedido) Hacer Pedido
-        </dd>
-        <hr />
-        <!-- Permisos de Cotizaciones -->
-        <dt class="col-sm-2">Cotizaciones</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerCotizaciones) VerCotizaciones 
-            @Html.DisplayFor(model => model.EditCotizaciones) EditCotizaciones 
-            @Html.DisplayFor(model => model.EliCotizaciones) EliCotizaciones 
-            @Html.DisplayFor(model => model.CrearCotizaciones) CrearCotizaciones
-        </dd>
-        <hr />
-        <!-- Permisos de Ventas -->
-        <dt class="col-sm-2">Ventas</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerVentas) VerVentas 
-            @Html.DisplayFor(model => model.EditVentas) EditVentas 
-            @Html.DisplayFor(model => model.EliVentas) EliVentas 
-            @Html.DisplayFor(model => model.CrearVentas)
-        </dd>
-        <hr />
-        <!-- Permisos de Rol -->
-        <dt class="col-sm-2">Roles</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerRol) VerRol 
-            @Html.DisplayFor(model => model.EditRol) EditRol 
-            @Html.DisplayFor(model => model.EliRol) EliRol 
-            @Html.DisplayFor(model => model.CrearRol)
-        </dd>
-        <hr />
-        <!-- Permisos de Análisis -->
-        <dt class="col-sm-2">Análisis</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VerAnalisis) VerAnalisis
-        </dd>
-    </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Roles</td>
+                <td>@ConvertirPermiso(Model.VerRol)</td>
+            </tr>
+            <tr>
+                <td>Editar Roles</td>
+                <td>@ConvertirPermiso(Model.EditRol)</td>
+            </tr>
+            <tr>
+                <td>Eliminar Roles</td>
+                <td>@ConvertirPermiso(Model.EliRol)</td>
+            </tr>
+            <tr>
+                <td>Añadir nuevos Roles</td>
+                <td>@ConvertirPermiso(Model.CrearRol)</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Editar</a> 
-    <a asp-action="Index">Back to List</a>
+    <h4>Análisis</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ver detalles de los Análisis</td>
+                <td>@ConvertirPermiso(Model.VerAnalisis)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditRol)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="edit">Editar</a>
+    }
+    <a asp-action="Index" class="ver">Regresar al Listado</a>
 </div>

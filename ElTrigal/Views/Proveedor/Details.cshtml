@@ -4,6 +4,10 @@
     ViewData["Title"] = "Details";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProveedor)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/productos.css" />
 
 <h1>@Html.DisplayFor(model => model.Nombre)</h1>
@@ -238,9 +242,13 @@
 </table>
     }
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> 
-    <a asp-action="Index">Back to List</a>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditProveedor)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="edit">Editar</a>
+    }
+    <a asp-action="Index" class="ver">Regresar al Listado</a>
 </div>
 
 <div>

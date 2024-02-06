@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = null;
+}
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.EditMarca)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
 }
 <link rel="stylesheet" href="~/css/productos.css">
 

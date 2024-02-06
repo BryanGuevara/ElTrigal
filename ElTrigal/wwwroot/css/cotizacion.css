@@ -86,13 +86,6 @@ label {
     color: #ffffff;
 }
 
-
-    input:hover,
-    select:hover,
-    textarea:hover {
-        border-color: #007BFF;
-    }
-
 .btn-primary {
     background-color: #007BFF;
     border-color: #007BFF;

@@ -20,7 +20,7 @@ a {
 }
 
     a:hover {
-        background-color: #8B8B00; 
+        background-color: #8B8B00;
         color: #ffffff;
         transform: scale(1.05);
     }
@@ -44,7 +44,7 @@ a {
     }
 
 .create {
-    background-color: #8B8B00; 
+    background-color: #8B8B00;
     border: 1px solid #8B8B00;
     color: #000000;
     padding: 10px 15px;
@@ -95,7 +95,7 @@ textarea {
     input:hover,
     select:hover,
     textarea:hover {
-        border-color: #8B8B00; 
+        border-color: #8B8B00;
         filter: brightness(50%);
         transform: scale(1.05);
     }
@@ -107,8 +107,8 @@ label {
 }
 
 .btn-primary {
-    background-color: #8B8B00; 
-    border-color: #8B8B00; 
+    background-color: #8B8B00;
+    border-color: #8B8B00;
     color: #ffffff;
 }
 
@@ -125,7 +125,7 @@ input[type="submit"] {
 }
 
     input[type="submit"]:hover {
-        background-color: #8B8B00; 
+        background-color: #8B8B00;
     }
 
 .table {
@@ -157,5 +157,5 @@ td {
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #D9534F;
+    background-color: #7B7B00; 
 }

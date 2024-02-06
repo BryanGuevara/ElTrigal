@@ -154,9 +154,9 @@ td {
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #4CAE4C; 
+    background-color: #005a32; 
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #6BBF6B; 
+    background-color: #388e3c;
 }

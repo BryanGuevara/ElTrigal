@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ElTrigal.Models.Informe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.VerAnalisis)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+
+<link rel="stylesheet" href="~/css/personas.css">
+
+<h1>Informes</h1>
+
+<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+
+<form asp-controller="Informes" asp-action="Index" method="get">
+    <label for="fecha">Fecha:</label>
+    <input type="date" name="fecha" id="fecha" style="width: 75%;"/>
+
+    <label for="tipoInforme">Tipo de Informe:</label>
+    <select name="tipoInforme" id="tipoInforme" style="width: 75%;">
+        <option value="">Todos</option>
+        <option value="Producto">Mostrar Productos</option>
+        <option value="Cotizacion">Mostrar Cotizaciones</option>
+        <option value="Venta">Mostrar Ventas</option>
+        <option value="Detalle">Mostrar Detalles</option>
+    </select>
+
+    <div><button type="submit">Filtrar</button></div>
+</form>
+<table class="table" style="width: 75%; margin: 0 auto;">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    <div style="display: inline-block;">
+                        <h3>@Html.DisplayFor(modelItem => item.TipoInforme)</h3>
+                        <hr />
+                        <p>@Html.DisplayFor(modelItem => item.DetallesInforme)</p>
+                        <hr />
+                        <span>@Html.DisplayFor(modelItem => item.FechaGeneracion)</span>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

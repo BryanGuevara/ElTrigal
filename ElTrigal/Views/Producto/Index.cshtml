@@ -4,13 +4,22 @@
     ViewData["Title"] = "Index";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/productos.css" />
 
-<h1>Index</h1>
+<h1>Productos</h1>
 
-<p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
-<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
-
+<hr />
+<p>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.CrearProductos)
+    {
+        <a asp-action="Create" class="crear">Añadir Produto</a>
+    }
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -52,10 +61,22 @@
                     @Html.DisplayFor(modelItem => item.Cantidad)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Edit</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="ver">Details</a> 
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Delete</a> 
-                    <a asp-action="Entrada" asp-route-id="@item.Id" asp-route-cantidad="1" class="entrada">Entrada</a>
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditProductos)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.VerProductos)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EliProductos)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Borrar</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.Pedido)
+                    {
+                        <a asp-action="Entrada" asp-route-id="@item.Id" class="entrada">Entrada</a>
+                    }
                 </td>
             </tr>
         }

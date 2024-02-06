@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Catalogo";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/index.css">
+
+<div class="container">
+
+    @foreach (var item in ViewBag.Proveedores)
+        {
+        <a class="nav-link text-dark catalogo dentro" asp-action="VerCatalogo" asp-route-id="@item.Id">@item.Nombre</a>
+        }     
+
+    <a class="nav-link text-dark salir dentro" asp-action="Index">Volver</a>
+</div>

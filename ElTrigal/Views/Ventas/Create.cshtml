@@ -4,6 +4,10 @@
     ViewData["Title"] = "Create";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.CrearVentas)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 
 <link rel="stylesheet" href="~/css/cotizacion.css">
 

@@ -52,41 +52,43 @@ namespace ElTrigal.Controllers
         // POST: Rols/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,VerTodo,VerUsuario,EditUsuario,EliUsuario,CrearUsuario,EditPass,VerCliente,EditCliente,EliCliente,CrearCliente,VerProveedor,EditProveedor,EliProveedor,CrearProveedor,VerMarca,EditMarca,EliMarca,CrearMarca,VerCategoria,EditCategoria,EliCategoria,CrearCategoria,VerProductos,EditProductos,EliProductos,CrearProductos,VerCotizaciones,EditCotizaciones,EliCotizaciones,CrearCotizaciones,VerVentas,EditVentas,EliVentas,CrearVentas,VerRol,EditRol,EliRol,CrearRol,VerAnalisis")] Rol rol)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,VerTodo,VerUsuario,EditUsuario,EliUsuario,CrearUsuario,EditPass,VerCliente,EditCliente,EliCliente,CrearCliente,VerProveedor,EditProveedor,EliProveedor,CrearProveedor,VerMarca,EditMarca,EliMarca,CrearMarca,VerCategoria,EditCategoria,EliCategoria,CrearCategoria,VerProductos,EditProductos,EliProductos,Pedido,CrearProductos,VerCotizaciones,EditCotizaciones,EliCotizaciones,CrearCotizaciones,VerVentas,EditVentas,EliVentas,CrearVentas,VerRol,EditRol,EliRol,CrearRol,VerAnalisis")] Rol rol)
         {
-            // Asignar permisos de "Ver" automáticamente basados en los permisos de edición
-            if (rol.EditUsuario || rol.EliUsuario || rol.CrearUsuario || rol.EditPass)
-                rol.VerUsuario = true;
+                if (rol.EditPass)
+                    rol.EditUsuario = true;
 
-            if (rol.EditCliente || rol.EliCliente || rol.CrearCliente)
-                rol.VerCliente = true;
+                if (rol.EditUsuario || rol.EliUsuario || rol.CrearUsuario)
+                    rol.VerUsuario = true;
 
-            if (rol.EditProveedor || rol.EliProveedor || rol.CrearProveedor)
-                rol.VerProveedor = true;
+                if (rol.EditCliente || rol.EliCliente || rol.CrearCliente)
+                    rol.VerCliente = true;
 
-            if (rol.EditMarca || rol.EliMarca || rol.CrearMarca)
-                rol.VerMarca = true;
+                if (rol.EditProveedor || rol.EliProveedor || rol.CrearProveedor)
+                    rol.VerProveedor = true;
 
-            if (rol.EditCategoria || rol.EliCategoria || rol.CrearCategoria)
-                rol.VerCategoria = true;
+                if (rol.EditMarca || rol.EliMarca || rol.CrearMarca)
+                    rol.VerMarca = true;
 
-            if (rol.EditProductos || rol.EliProductos || rol.CrearProductos || rol.Pedido)
-                rol.VerProductos = true;
+                if (rol.EditCategoria || rol.EliCategoria || rol.CrearCategoria)
+                    rol.VerCategoria = true;
 
-            if (rol.EditCotizaciones || rol.EliCotizaciones || rol.CrearCotizaciones)
-                rol.VerCotizaciones = true;
+                if (rol.EditProductos || rol.EliProductos || rol.CrearProductos || rol.Pedido || rol.VerCatalogo)
+                    rol.VerProductos = true;
 
-            if (rol.EditVentas || rol.EliVentas || rol.CrearVentas)
-                rol.VerVentas = true;
+                if (rol.EditCotizaciones || rol.EliCotizaciones || rol.CrearCotizaciones)
+                    rol.VerCotizaciones = true;
 
-            if (rol.EditRol || rol.EliRol || rol.CrearRol)
-                rol.VerRol = true;
+                if (rol.EditVentas || rol.EliVentas || rol.CrearVentas)
+                    rol.VerVentas = true;
 
+                if (rol.EditRol || rol.EliRol || rol.CrearRol)
+                    rol.VerRol = true;
+          
             rol.Id = Guid.NewGuid();
-            _context.Add(rol);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+                _context.Add(rol);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
         // GET: Rols/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -102,7 +104,22 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
-            if (rol.EditUsuario || rol.EliUsuario || rol.CrearUsuario || rol.EditPass)
+            return View(rol);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,VerTodo,VerUsuario,EditUsuario,EliUsuario,CrearUsuario,EditPass,VerCliente,EditCliente,EliCliente,CrearCliente,VerProveedor,EditProveedor,EliProveedor,CrearProveedor,VerMarca,EditMarca,EliMarca,CrearMarca,VerCategoria,EditCategoria,EliCategoria,CrearCategoria,VerProductos,EditProductos,EliProductos,CrearProductos,VerCotizaciones,EditCotizaciones,EliCotizaciones,CrearCotizaciones,VerVentas,EditVentas,EliVentas,CrearVentas,VerRol,EditRol,EliRol,CrearRol,VerAnalisis")] Rol rol)
+        {
+            if (id != rol.Id)
+            {
+                return NotFound();
+            }
+
+            if (rol.EditPass)
+                rol.EditUsuario = true;
+
+            if (rol.EditUsuario || rol.EliUsuario || rol.CrearUsuario)
                 rol.VerUsuario = true;
 
             if (rol.EditCliente || rol.EliCliente || rol.CrearCliente)
@@ -117,7 +134,7 @@ namespace ElTrigal.Controllers
             if (rol.EditCategoria || rol.EliCategoria || rol.CrearCategoria)
                 rol.VerCategoria = true;
 
-            if (rol.EditProductos || rol.EliProductos || rol.CrearProductos || rol.Pedido)
+            if (rol.EditProductos || rol.EliProductos || rol.CrearProductos || rol.Pedido || rol.VerCatalogo)
                 rol.VerProductos = true;
 
             if (rol.EditCotizaciones || rol.EliCotizaciones || rol.CrearCotizaciones)
@@ -129,25 +146,6 @@ namespace ElTrigal.Controllers
             if (rol.EditRol || rol.EliRol || rol.CrearRol)
                 rol.VerRol = true;
 
-            return View(rol);
-        }
-
-        // POST: Rols/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,VerTodo,VerUsuario,EditUsuario,EliUsuario,CrearUsuario,EditPass,VerCliente,EditCliente,EliCliente,CrearCliente,VerProveedor,EditProveedor,EliProveedor,CrearProveedor,VerMarca,EditMarca,EliMarca,CrearMarca,VerCategoria,EditCategoria,EliCategoria,CrearCategoria,VerProductos,EditProductos,EliProductos,CrearProductos,VerCotizaciones,EditCotizaciones,EliCotizaciones,CrearCotizaciones,VerVentas,EditVentas,EliVentas,CrearVentas,VerRol,EditRol,EliRol,CrearRol,VerAnalisis")] Rol rol)
-        {
-            if (id != rol.Id)
-            {
-                return NotFound();
-            }
-
-            // Asignar permisos de "Ver" automáticamente basados en los permisos de edición
-            if (rol.EditCliente)
-                rol.VerCliente = true;
-            if (rol.EditProveedor)
-                rol.VerProveedor = true;
-            // Continuar para los demás permisos de edición
 
             try
             {

@@ -4,6 +4,10 @@
     ViewData["Title"] = "Delete";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.EliProveedor)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/productos.css" />
 
 <h1>Delete</h1>

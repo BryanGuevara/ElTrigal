@@ -4,7 +4,10 @@
     ViewData["Title"] = "Delete";
     Layout = null;
 }
-
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.EliVentas)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/cotizacion.css">
 
 

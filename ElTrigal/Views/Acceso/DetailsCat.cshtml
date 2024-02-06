@@ -4,10 +4,7 @@
     ViewData["Title"] = "Detalles del Producto";
     Layout = null;
 }
-@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos)
-{
-    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
-}
+
 <link rel="stylesheet" href="~/css/productos.css">
 
 <h1>Detalles del Producto</h1>

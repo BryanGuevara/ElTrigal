@@ -22,7 +22,7 @@ namespace ElTrigal.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Ventas != null ? 
-                          View(await _context.Ventas.ToListAsync()) :
+                          View(await _context.Ventas.Include(v => v.Cliente).ToListAsync()) :
                           Problem("Entity set 'ElTrigalContext.Ventas'  is null.");
         }
 
@@ -59,19 +59,33 @@ namespace ElTrigal.Controllers
             return View();
         }
 
-        // POST: Ventas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ClienteId")] Venta venta)
         {
-            venta.Id = Guid.NewGuid();
-            venta.FechaVenta = DateTime.Now;
-            _context.Add(venta);
+            if (ModelState.IsValid)
+            {
+                venta.Id = Guid.NewGuid();
+                venta.FechaVenta = DateTime.Now;
+
+                var cliente = await _context.Clientes.FindAsync(venta.ClienteId);
+
+                var nuevoInforme = new Informe
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Venta",
+                    DetallesInforme = $"Se hizo una venta para el cliente {(cliente != null ? cliente.Nombre : "Cliente Desconocido")}",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+                _context.Add(venta);
                 await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Detalle", new { perteneceId = venta.Id });
+                return RedirectToAction("Index", "Detalle", new { perteneceId = venta.Id });
+            }
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nombre", venta.ClienteId);
+            return View(venta);
         }
 
         // GET: Ventas/Edit/5
@@ -107,7 +121,18 @@ namespace ElTrigal.Controllers
                 try
                 {
                     _context.Update(venta);
-                    await _context.SaveChangesAsync();
+                var cliente = await _context.Clientes.FindAsync(venta.ClienteId);
+                var nuevoInforme = new Informe
+
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Cotización",
+                    DetallesInforme = $"Se actualizo la venta para el cliente {venta.Cliente?.Nombre}",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+                await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,21 +166,30 @@ namespace ElTrigal.Controllers
             return View(venta);
         }
 
-        // POST: Ventas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Ventas == null)
+            var venta = await _context.Ventas
+                                        .Include(v => v.Cliente)
+                                        .FirstOrDefaultAsync(v => v.Id == id);
+            if (venta == null)
             {
-                return Problem("Entity set 'ElTrigalContext.Ventas'  is null.");
+                return NotFound();
             }
-            var venta = await _context.Ventas.FindAsync(id);
-            if (venta != null)
+
+            _context.Ventas.Remove(venta);
+
+            var nuevoInforme = new Informe
             {
-                _context.Ventas.Remove(venta);
-            }
-            
+                Id = Guid.NewGuid(),
+                TipoInforme = "Venta",
+                DetallesInforme = $"Se eliminó la venta para el cliente {(venta.Cliente != null ? venta.Cliente.Nombre : "Cliente Desconocido")}",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

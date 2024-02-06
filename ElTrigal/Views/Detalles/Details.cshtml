@@ -4,7 +4,10 @@
     Layout = null;
     ViewData["Title"] = "Detalles";
 }
-
+@if (RoleContext.CurrentRole != null && (!RoleContext.CurrentRole.EditCotizaciones || !RoleContext.CurrentRole.EditCotizaciones))
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +39,7 @@
 
     <div>
         <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn-editar">Editar</a>
-        <a asp-action="Index" asp-route-perteneceId="@Model.PerteneceId" class="btn btn-secondary">Volver a la Lista</a>
+        <a asp-action="Index" asp-route-perteneceId="@Model.PerteneceId" class="btn btn-secondary">Regresar al Listado</a>
     </div>
 
 </body>

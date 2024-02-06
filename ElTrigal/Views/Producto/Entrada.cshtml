@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Entrada de Producto";
 }
-
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.Pedido)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <h1>Entrada de Producto</h1>
 
 <form asp-action="ProcesarEntrada">

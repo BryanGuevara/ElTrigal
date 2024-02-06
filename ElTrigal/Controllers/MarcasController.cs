@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +19,13 @@ namespace ElTrigal.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var elTrigalContext = _context.Marcas.Include(m => m.Proveedor);
-            return View(await elTrigalContext.ToListAsync());
+            var marcas = await _context.Marcas.Include(m => m.Proveedor).ToListAsync();
+            return View(marcas);
         }
 
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Marcas == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -34,6 +33,7 @@ namespace ElTrigal.Controllers
             var marca = await _context.Marcas
                 .Include(m => m.Proveedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (marca == null)
             {
                 return NotFound();
@@ -50,17 +50,17 @@ namespace ElTrigal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,ProveedorId")] Marca marca)
+        public async Task<IActionResult> Create([Bind("Nombre,ProveedorId,Descripcion,Especialidad")] Marca marca)
         {
-                marca.Id = Guid.NewGuid();
-                _context.Add(marca);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            marca.Id = Guid.NewGuid();
+            _context.Add(marca);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Marcas == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -76,34 +76,34 @@ namespace ElTrigal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,ProveedorId")] Marca marca)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,ProveedorId,Descripcion,Especialidad")] Marca marca)
         {
             if (id != marca.Id)
             {
                 return NotFound();
             }
-                try
-                {
-                    _context.Update(marca);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MarcaExists(marca.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
 
+            try
+            {
+                _context.Update(marca);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MarcaExists(marca.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Marcas == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -123,23 +123,18 @@ namespace ElTrigal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Marcas == null)
-            {
-                return Problem("Entity set 'ElTrigalContext.Marcas'  is null.");
-            }
             var marca = await _context.Marcas.FindAsync(id);
             if (marca != null)
             {
                 _context.Marcas.Remove(marca);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MarcaExists(Guid id)
         {
-          return (_context.Marcas?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _context.Marcas.Any(e => e.Id == id);
         }
     }
 }

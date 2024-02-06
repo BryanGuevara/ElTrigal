@@ -4,12 +4,23 @@
     ViewData["Title"] = "Index";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerMarca)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <link rel="stylesheet" href="~/css/productos.css">
 
 <h1>Marcas</h1>
 
-<p><a asp-action="Create" class="crear">Añadir Cliente</a></p>
-<p><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a></p>
+<hr />
+<p>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.CrearMarca)
+    {
+        <a asp-action="Create" class="crear">Añadir Marca</a>
+    }
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
+</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,9 +43,18 @@
                 @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Borrar</a>
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditMarca)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.VerMarca)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EliMarca)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Borrar</a>
+                    }
             </td>
         </tr>
 }

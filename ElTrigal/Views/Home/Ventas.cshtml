@@ -14,13 +14,13 @@
     }
     @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerAnalisis == true))
     {
-        <a class="nav-link cotizaciones dentro" asp-controller="Analisis" asp-action="Index">Analisis</a>
+        <a class="nav-link cotizaciones dentro" asp-controller="Informes" asp-action="Index">Informes</a>
     }
     <a class="nav-link text-dark salir dentro" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
 </div>
 
 
 <p>
-    En Esta parte puedes ver todo lo relacionado a personas, como los <b>Clientes</b> para cotizaciones,
-    y los propios <b>Usuarios</b> que pueden usar este sistema y los <b>Roles</b> de los Usuarios
+    En esta parte se puede crear las <b>Cotizaciones</b> y <b>Ventas</b> para los <b>Clientes</b>
+    tambien se pueden ver los <b>Informes</b> para ver los movimientos del <b>Producto</b>
 </p>

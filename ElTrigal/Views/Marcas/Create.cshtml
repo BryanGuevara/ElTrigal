@@ -4,7 +4,11 @@
     ViewData["Title"] = "Create";
     Layout = null;
 }
-<link rel="stylesheet" href="~/css/productos.css"/>
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.CrearMarca)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+<link rel="stylesheet" href="~/css/productos.css" />
 
 <h1>Create</h1>
 
@@ -14,11 +18,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -30,6 +29,16 @@
                 <span asp-validation-for="ProveedorId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Especialidad" class="control-label"></label>
+                <input asp-for="Especialidad" class="form-control" />
+                <span asp-validation-for="Especialidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -37,6 +46,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar al Listado</a>
 </div>
-

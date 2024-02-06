@@ -4,7 +4,10 @@
     Layout = null;
     ViewData["Title"] = "Index";
 }
-
+@if (RoleContext.CurrentRole != null && (!RoleContext.CurrentRole.EditCotizaciones || !RoleContext.CurrentRole.EditCotizaciones))
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 <!DOCTYPE html>
 <html>
 <head>

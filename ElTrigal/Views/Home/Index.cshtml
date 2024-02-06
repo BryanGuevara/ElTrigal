@@ -3,10 +3,10 @@
     Layout = null;
 }
 
-@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerTodo)
-{
-    <script>window.location.href = '@Url.Action("Index", "Acceso")';</script>
-}
+    @if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerTodo)
+    {
+        <script>window.location.href = '@Url.Action("Index", "Acceso")';</script>
+    }
 
 <link rel="stylesheet" href="~/css/index.css">
 
@@ -14,23 +14,26 @@
 
     <h1>El Trigal</h1>
 <div class="container">
-    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCotizaciones == true || RoleContext.CurrentRole.VerVentas == true))
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCotizaciones || RoleContext.CurrentRole.VerVentas || RoleContext.CurrentRole.VerAnalisis))
     {
-        <a class="nav-link cotizaciones @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Ventas">Ventas</a>
+        <a class="nav-link cotizaciones @(RoleContext.CurrentRole.VerProductos ? "" : "dentro")" asp-action="Ventas">Ventas</a>
     }
+
     @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerUsuario == true || RoleContext.CurrentRole.VerCliente == true || RoleContext.CurrentRole.VerRol == true))
     {
-        <a class="nav-link personas @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Personas">Personas</a>
+        <a class="nav-link personas @(RoleContext.CurrentRole.VerProductos ? "" : "dentro")" asp-action="Personas">Personas</a>
     }
-    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerCatalogo == true))
+
+    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos || RoleContext.CurrentRole.VerCategoria || RoleContext.CurrentRole.VerMarca || RoleContext.CurrentRole.VerProveedor))
     {
-        <a class="nav-link catalogo @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Catalogo">Catalogo</a>
+        <a class="nav-link productos @(RoleContext.CurrentRole.VerProductos ? "" : "dentro")" asp-action="Productos">Productos</a>
     }
-    @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos == true || RoleContext.CurrentRole.VerCategoria == true || RoleContext.CurrentRole.VerMarca == true || RoleContext.CurrentRole.VerProveedor == true))
+
+    @if (RoleContext.CurrentRole != null)
     {
-        <a class="nav-link productos @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-action="Productos">Productos</a>
+        <a class="nav-link salir @(RoleContext.CurrentRole.VerProductos ? "" : "dentro")" asp-action="Index" asp-controller="Acceso">Salir</a>
     }
-    <a class="nav-link salir @(RoleContext.CurrentRole != null && !RoleContext.CurrentRole.VerProductos ? "dentro" : "")" asp-controller="Acceso" asp-action="Index">Salir</a>
+
 </div>
 
  @if (RoleContext.CurrentRole != null && (RoleContext.CurrentRole.VerProductos == true))

@@ -4,6 +4,10 @@
     ViewData["Title"] = "Edit";
     Layout = null;
 }
+@if (RoleContext.CurrentRole != null && !RoleContext.CurrentRole.EditRol)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 
 <link rel="stylesheet" href="~/css/personas.css">
 
@@ -150,11 +154,6 @@
                 <label asp-for="CrearProductos" class="control-label"></label>
                 <input asp-for="CrearProductos" class="form-control" />
                 <span asp-validation-for="CrearProductos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VerCatalogo" class="control-label"></label>
-                <input asp-for="VerCatalogo" class="form-control" />
-                <span asp-validation-for="VerCatalogo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Pedido" class="control-label"></label>

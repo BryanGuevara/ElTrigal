@@ -56,6 +56,17 @@ namespace ElTrigal.Controllers
         {
             producto.Id = Guid.NewGuid();
             _context.Add(producto);
+
+            var nuevoInforme = new Informe
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Producto",
+                DetallesInforme = $"Ingresaron {producto.Cantidad} del nuevo producto {producto.Nombre}",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -90,6 +101,17 @@ namespace ElTrigal.Controllers
             try
             {
                 _context.Update(producto);
+
+                var nuevoInforme = new Informe
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Producto",
+                    DetallesInforme = $"Se hisieron cambios en el producto {producto.Nombre}",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -132,6 +154,17 @@ namespace ElTrigal.Controllers
             try
             {
                 _context.Update(producto);
+
+                var nuevoInforme = new Informe
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Producto",
+                    DetallesInforme = $"Ingresaron {cantidad} unidades del producto {producto.Nombre} haciendo un total de {producto.Cantidad}",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

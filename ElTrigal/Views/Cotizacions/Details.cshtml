@@ -4,11 +4,16 @@
     ViewData["Title"] = "Details";
     Layout = null;
 }
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.VerCotizaciones)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 
 <link rel="stylesheet" href="~/css/cotizacion.css">
 
 <div>
-    <hr /><table class="table invisible" style="border: 0;">
+    <hr />
+    <table class="table invisible" style="border: 0;">
         <thead>
             <tr>
             <tr>
@@ -178,6 +183,9 @@
 </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Editar</a>
+    @if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.EditCotizaciones)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="editar">Editar</a>
+    }
     <a asp-action="Index" class="ver">Regresar al Listado</a>
 </div>

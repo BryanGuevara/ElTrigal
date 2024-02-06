@@ -4,6 +4,12 @@
     ViewData["Title"] = "Añadir Categoria";
     Layout = null;
 }
+
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.CrearCategoria)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
+
 <link rel="stylesheet" href="~/css/productos.css">
 
 <h1>Nueva Categoria</h1>

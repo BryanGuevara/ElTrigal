@@ -78,11 +78,32 @@ namespace ElTrigal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PerteneceId,ProductoId,Descuento, Cantidad")] Detalle detalle)
         {
-                detalle.Id = Guid.NewGuid();
-                _context.Add(detalle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
-            }
+            detalle.Id = Guid.NewGuid();
+
+            var producto = await _context.Productos
+                        .FirstOrDefaultAsync(c => c.Id == detalle.ProductoId);
+
+            var cotizacion = await _context.Cotizaciones
+                        .Include(c => c.Cliente)
+                        .FirstOrDefaultAsync(c => c.Id == detalle.PerteneceId);
+
+            var Producto = producto?.Nombre ?? "Producto Desconocido";
+
+            var clienteNombre = cotizacion?.Cliente?.Nombre ?? "Cliente Desconocido";
+
+            var nuevoInforme = new Informe
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Detalle",
+                DetallesInforme = $"Se añadió a la cotización del cliente {clienteNombre} {detalle.Cantidad} {Producto} con el {detalle.Descuento}% de descuento",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
+            _context.Add(detalle);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
+        }
 
 
 
@@ -116,7 +137,28 @@ namespace ElTrigal.Controllers
                 try
                 {
                     _context.Update(detalle);
-                    await _context.SaveChangesAsync();
+
+                var producto = await _context.Productos
+                            .FirstOrDefaultAsync(c => c.Id == detalle.ProductoId);
+
+                var cotizacion = await _context.Cotizaciones
+                            .Include(c => c.Cliente)
+                            .FirstOrDefaultAsync(c => c.Id == detalle.PerteneceId);
+
+                var Producto = producto?.Nombre ?? "Producto Desconocido";
+
+                var clienteNombre = cotizacion?.Cliente?.Nombre ?? "Cliente Desconocido";
+
+                var nuevoInforme = new Informe
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Detalle",
+                    DetallesInforme = $"Se añadió a la cotización del cliente {clienteNombre} {detalle.Cantidad} {Producto} con el {detalle.Descuento}% de descuento",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+                await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -165,6 +207,28 @@ namespace ElTrigal.Controllers
             }
 
             _context.Detalle.Remove(detalle);
+
+
+            var producto = await _context.Productos
+                        .FirstOrDefaultAsync(c => c.Id == detalle.ProductoId);
+
+            var cotizacion = await _context.Cotizaciones
+                        .Include(c => c.Cliente)
+                        .FirstOrDefaultAsync(c => c.Id == detalle.PerteneceId);
+
+            var Producto = producto?.Nombre ?? "Producto Desconocido";
+
+            var clienteNombre = cotizacion?.Cliente?.Nombre ?? "Cliente Desconocido";
+
+            var nuevoInforme = new Informe
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Detalle",
+                DetallesInforme = $"Se añadió a la cotización del cliente {clienteNombre} {detalle.Cantidad} {Producto} con el {detalle.Descuento}% de descuento",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });

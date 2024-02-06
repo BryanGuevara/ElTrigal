@@ -80,7 +80,26 @@ namespace ElTrigal.Controllers
         {
                 detalle.Id = Guid.NewGuid();
                 _context.Add(detalle);
-                await _context.SaveChangesAsync();
+
+
+            var venta = await _context.Ventas
+                                      .Include(v => v.Cliente) 
+                                      .FirstOrDefaultAsync(v => v.Id == detalle.PerteneceId);
+
+
+            var clienteNombre = venta.Cliente?.Nombre ?? "Cliente Desconocido";
+
+            var nuevoInforme = new Informe
+
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Detalle",
+                DetallesInforme = $"Se añadio a la factura de el cliente {detalle.Venta.Cliente?.Nombre} {detalle.Cantidad} {detalle.Producto?.Nombre} con el {detalle.Descuento}% de descuento",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
+            await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
             }
 
@@ -116,7 +135,25 @@ namespace ElTrigal.Controllers
                 try
                 {
                     _context.Update(detalle);
-                    await _context.SaveChangesAsync();
+
+                var venta = await _context.Ventas
+                                          .Include(v => v.Cliente)
+                                          .FirstOrDefaultAsync(v => v.Id == detalle.PerteneceId);
+
+
+                var clienteNombre = venta.Cliente?.Nombre ?? "Cliente Desconocido";
+
+                var nuevoInforme = new Informe
+
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Detalle",
+                    DetallesInforme = $"Se le edito a la factura de el cliente {detalle.Venta.Cliente?.Nombre} {detalle.Cantidad} {detalle.Producto?.Nombre} con el {detalle.Descuento}% de descuento",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+                await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -164,6 +201,23 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
+            var venta = await _context.Ventas
+                                      .Include(v => v.Cliente)
+                                      .FirstOrDefaultAsync(v => v.Id == detalle.PerteneceId);
+
+
+            var clienteNombre = venta.Cliente?.Nombre ?? "Cliente Desconocido";
+
+            var nuevoInforme = new Informe
+
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Detalle",
+                DetallesInforme = $"Se elimino de la factura de el cliente {detalle.Venta.Cliente?.Nombre} {detalle.Cantidad} {detalle.Producto?.Nombre} con el {detalle.Descuento}% de descuento",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
             _context.Detalle.Remove(detalle);
             await _context.SaveChangesAsync();
 

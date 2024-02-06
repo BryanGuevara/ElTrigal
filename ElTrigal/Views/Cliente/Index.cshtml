@@ -4,15 +4,25 @@
     ViewData["Title"] = "Index";
     Layout = null;
 }
+@if (RoleContext.CurrentRole == null || !RoleContext.CurrentRole.VerCliente)
+{
+    <script>window.location.href = '@Url.Action("Index", "Home")';</script>
+}
 
 <link rel="stylesheet" href="~/css/personas.css">
 
 
 <h1>Clientes</h1>
 
+<hr />
 <p>
-    <a asp-action="Create">Crear Nuevo</a>
+    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.CrearCliente)
+    {
+        <a asp-action="Create" class="crear">Añadir Cliente</a>
+    }
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -54,9 +64,18 @@
                     @Html.DisplayFor(modelItem => item.Direccion)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary editar">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info ver">Ver</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger eliminar">Eliminar</a>
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EditCategoria)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="editar">Editar</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.VerCategoria)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="ver">Ver</a>
+                    }
+                    @if (RoleContext.CurrentRole != null && RoleContext.CurrentRole.EliCategoria)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="borrar">Borrar</a>
+                    }
                 </td>
             </tr>
         }

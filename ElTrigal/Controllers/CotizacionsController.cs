@@ -31,7 +31,7 @@ namespace ElTrigal.Controllers
 
         private async Task<List<Cotizacion>> Filtro(string codigoFactura, DateTime? fechaDespuesDe, DateTime? fechaAntesDe)
         {
-            var cotizaciones = from c in _context.Cotizaciones
+            var cotizaciones = from c in _context.Cotizaciones.Include(c => c.Cliente)
                                select c;
 
             if (!String.IsNullOrEmpty(codigoFactura))
@@ -51,6 +51,7 @@ namespace ElTrigal.Controllers
 
             return await cotizaciones.ToListAsync();
         }
+
 
 
         // GET: Cotizacions/Details/5
@@ -104,6 +105,16 @@ namespace ElTrigal.Controllers
             cotizacion.Pagado = false;
             cotizacion.Abono ??= 0.00m;
 
+            var nuevoInforme = new Informe
+
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Cotización",
+                DetallesInforme = $"Se creo la cotizacion con el codigo de factura {cotizacion.CodigoFactura} para el cliente {cotizacion.Cliente?.Nombre}",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
             _context.Add(cotizacion);
             await _context.SaveChangesAsync();
 
@@ -177,8 +188,17 @@ namespace ElTrigal.Controllers
                 cotizacionOriginal.Vencimiento = cotizacionOriginal.Fecha.AddDays(cotizacion.Dias);
 
                 _context.Entry(cotizacionOriginal).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
+                var nuevoInforme = new Informe
+                {
+                    Id = Guid.NewGuid(),
+                    TipoInforme = "Cotización",
+                    DetallesInforme = $"Se actualizó la cotización con el código de factura {cotizacion.CodigoFactura} para el cliente {cotizacion.Cliente?.Nombre}",
+                    FechaGeneracion = DateTime.Now
+                };
+
+                _context.Add(nuevoInforme);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -213,14 +233,25 @@ namespace ElTrigal.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var cotizacion = await _context.Cotizaciones.FindAsync(id);
-            if (cotizacion != null)
+            if (cotizacion == null)
             {
-                _context.Cotizaciones.Remove(cotizacion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
-            return NotFound();
+            _context.Cotizaciones.Remove(cotizacion);
+
+            var nuevoInforme = new Informe
+            {
+                Id = Guid.NewGuid(),
+                TipoInforme = "Cotización",
+                DetallesInforme = $"Se eliminó la cotización con el código de factura {cotizacion.CodigoFactura} para el cliente {cotizacion.Cliente?.Nombre}",
+                FechaGeneracion = DateTime.Now
+            };
+
+            _context.Add(nuevoInforme);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool CotizacionExists(Guid id)
