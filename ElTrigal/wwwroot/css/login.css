@@ -61,14 +61,14 @@ label {
 }
 
 .login-button {
-    background: url('../img/login.png') no-repeat center;
-    background-size: 70%; 
+    background: url('../img/login.png') no-repeat 10px center;
+    background-size: 70%;
     color: #fff;
-    padding: 12px 15px; 
+    padding: 12px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 }
 

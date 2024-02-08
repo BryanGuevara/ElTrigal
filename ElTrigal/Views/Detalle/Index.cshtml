@@ -20,7 +20,7 @@
 
     <p>
         <a asp-action="Create" asp-route-perteneceId="@ViewData["PerteneceId"]">Añadir Producto</a>
-        <a asp-controller="Ventas" asp-action="Details" asp-route-id="@ViewData["PerteneceId"]">Volver a la Cotización</a>
+        <a asp-controller="Ventas" asp-action="Details" asp-route-id="@ViewData["PerteneceId"]">Volver a la Factura de Venta</a>
     </p>
     <table class="table">
         <thead>
@@ -40,7 +40,7 @@
                         @Html.DisplayFor(modelItem => detalle.Producto.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => detalle.Producto.Precio)
+                        $@Html.DisplayFor(modelItem => detalle.Producto.Precio)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => detalle.Cantidad)

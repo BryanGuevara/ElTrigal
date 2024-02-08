@@ -1,7 +1,7 @@
 ﻿@model ElTrigal.Models.Cliente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
     Layout = null;
 }
 
@@ -136,6 +136,43 @@
 else
 {
     <p>No hay cotizaciones asociadas a este cliente.</p>
+}
+
+@if (Model.Venta != null && Model.Venta.Any())
+{
+    <div>
+        <h4>Listado de Ventas</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var venta in Model.Venta)
+                {
+                    <tr>
+                        <td>@venta.FechaVenta.ToShortDateString()</td>
+                        <td>@(venta.Cliente != null ? venta.Cliente.Nombre : "Sin cliente asociado")</td>
+                        <td>
+                            <ul>
+                                @foreach (var detalle in venta.Detalles)
+                                {
+                                    <li>@detalle.Producto?.Nombre - Cantidad: @detalle.Cantidad</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No hay ventas asociadas.</p>
 }
 
 <div>

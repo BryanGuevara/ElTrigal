@@ -20,7 +20,7 @@ a {
 }
 
     a:hover {
-        background-color: #0056b3;
+        background-color: #003366;
         color: #ffffff;
         transform: scale(1.05);
     }
@@ -74,7 +74,6 @@ textarea {
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;

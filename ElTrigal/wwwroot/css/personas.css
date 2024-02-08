@@ -20,7 +20,7 @@ a {
 }
 
     a:hover {
-        background-color: #0056b3;
+        background-color: #005a32;
         color: #ffffff;
         transform: scale(1.05);
     }
@@ -87,19 +87,10 @@ textarea {
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
 }
-
-    input:hover,
-    select:hover,
-    textarea:hover {
-        border-color: #007BFF;
-        filter: brightness(50%);
-        transform: scale(1.05);
-    }
 
 label {
     display: block;

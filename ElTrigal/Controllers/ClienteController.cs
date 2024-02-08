@@ -32,7 +32,11 @@ namespace ElTrigal.Controllers
 
             var cliente = await _context.Clientes
                 .Include(c => c.Cotizaciones)
+                .Include(c => c.Venta) 
+                .ThenInclude(v => v.Detalles)
+                .ThenInclude(d => d.Producto) 
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (cliente == null)
             {
                 return NotFound();
@@ -40,6 +44,7 @@ namespace ElTrigal.Controllers
 
             return View(cliente);
         }
+
 
         public IActionResult Create()
         {

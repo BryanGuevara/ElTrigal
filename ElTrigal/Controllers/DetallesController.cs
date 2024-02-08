@@ -76,12 +76,34 @@ namespace ElTrigal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PerteneceId,ProductoId,Descuento, Cantidad")] Detalle detalle)
+        public async Task<IActionResult> Create([Bind("Id,PerteneceId,ProductoId,Descuento,Cantidad")] Detalle detalle)
         {
             detalle.Id = Guid.NewGuid();
 
+            if (detalle.Descuento == null)
+            {
+                detalle.Descuento = 0;
+            }
+
             var producto = await _context.Productos
                         .FirstOrDefaultAsync(c => c.Id == detalle.ProductoId);
+
+            if (producto != null)
+            {
+                if (producto.Cantidad > 0)
+                {
+                    if (detalle.Cantidad >= producto.Cantidad)
+                    {
+                        producto.Cantidad = 0;
+                    }
+                    else
+                    {
+                        producto.Cantidad -= detalle.Cantidad;
+                    }
+
+                    _context.Update(producto);
+                }
+            }
 
             var cotizacion = await _context.Cotizaciones
                         .Include(c => c.Cliente)
@@ -104,7 +126,6 @@ namespace ElTrigal.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
         }
-
 
 
         // GET: Detalles/Edit/5
@@ -134,45 +155,52 @@ namespace ElTrigal.Controllers
                 return NotFound();
             }
 
-                try
+            try
+            {
+                if (detalle.Descuento == null)
                 {
+                    detalle.Descuento = 0;
+                }
+                if (detalle.Cantidad != null || detalle.Cantidad != 0)
+                {
+                    detalle.Descuento = 0;
                     _context.Update(detalle);
 
-                var producto = await _context.Productos
-                            .FirstOrDefaultAsync(c => c.Id == detalle.ProductoId);
+                    var cotizacion = await _context.Cotizaciones
+                                              .Include(c => c.Cliente)
+                                              .FirstOrDefaultAsync(c => c.Id == detalle.PerteneceId);
 
-                var cotizacion = await _context.Cotizaciones
-                            .Include(c => c.Cliente)
-                            .FirstOrDefaultAsync(c => c.Id == detalle.PerteneceId);
 
-                var Producto = producto?.Nombre ?? "Producto Desconocido";
+                    var clienteNombre = cotizacion.Cliente?.Nombre ?? "Cliente Desconocido";
 
-                var clienteNombre = cotizacion?.Cliente?.Nombre ?? "Cliente Desconocido";
+                    var nuevoInforme = new Informe
 
-                var nuevoInforme = new Informe
-                {
-                    Id = Guid.NewGuid(),
-                    TipoInforme = "Detalle",
-                    DetallesInforme = $"Se añadió a la cotización del cliente {clienteNombre} {detalle.Cantidad} {Producto} con el {detalle.Descuento}% de descuento",
-                    FechaGeneracion = DateTime.Now
-                };
-
-                _context.Add(nuevoInforme);
-                await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DetalleExists(detalle.Id))
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                        Id = Guid.NewGuid(),
+                        TipoInforme = "Detalle",
+                        DetallesInforme = $"Se le edito a la cotización del cliente {clienteNombre} {detalle.Cantidad} {detalle.Producto?.Nombre} con el {detalle.Descuento}% de descuento",
+                        FechaGeneracion = DateTime.Now
+                    };
+
+                    _context.Add(nuevoInforme);
+                    await _context.SaveChangesAsync();
                 }
-                return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
             }
+
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DetalleExists(detalle.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index), new { perteneceId = detalle.PerteneceId });
+        }
+
 
         // GET: Detalles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
